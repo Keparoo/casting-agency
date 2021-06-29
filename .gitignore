@@ -19,11 +19,10 @@ _mailinglist
 docs/_build/
 .vscode
 __pycache__/
+setup.sh
 
 # Coverage reports
 htmlcov/
 .coverage
 .coverage.*
 *,cover
-
-setup.sh
