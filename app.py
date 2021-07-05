@@ -12,7 +12,7 @@ def create_app(test_config=None):
     CORS(app)
     
 #----------------------------------------------------------------------------#
-# API endpoints
+# Movie Routes
 #----------------------------------------------------------------------------#
     @app.route('/', methods=['GET'])
     def index():
@@ -22,10 +22,20 @@ def create_app(test_config=None):
 
     @app.route('/movies', methods=['GET'])
     def get_movies():
-        return jsonify({
-            'message': 'Get movies'
-        })
+        '''Return all movies from database'''
 
+        try:
+            movies = Movie.query.all()
+
+            return jsonify({
+                'success': 'True',
+                'movies': [movie.format() for movie in movies]
+            }), 200
+        except Exception as e:
+            abort(500)
+#----------------------------------------------------------------------------#
+# Actor Routes
+#----------------------------------------------------------------------------#
     @app.route('/actors', methods=['GET'])
     def get_actors():
         '''Return all actors from database'''
@@ -63,9 +73,9 @@ def create_app(test_config=None):
 
         data = request.get_json()
 
-        name = data["name", None]
-        age = data["age", None]
-        gender = data["gender", None]
+        name = data.get("name", None)
+        age = data.get("age", None)
+        gender = data.get("gender", None)
 
         actor = Actor(name=name, age=age, gender=gender)
 
@@ -115,7 +125,7 @@ def create_app(test_config=None):
             db.session.rollback()
             abort(422)
 
-    @app.route('/actors/<int:id>', methods=['DELETE '])
+    @app.route('/actors/<int:id>', methods=['DELETE'])
     def delete_actor(id):
         '''Delete actor matching id from database'''
 
