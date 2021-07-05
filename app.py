@@ -36,7 +36,7 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:id>', methods=['GET'])
     def get_movie_by_id():
-        '''Return actor matching the id'''
+        '''Return movie matching the id'''
 
         try:
             movie = Movie.movie.get(id)
@@ -48,6 +48,29 @@ def create_app(test_config=None):
                     'success': True,
                     'movie': movie.format()
                 }), 200
+        except Exception as e:
+            abort(422)
+
+    @app.route('/movies', methods=['POST'])
+    def add_movie():
+        """Create and insert new movie into database"""
+
+        data = request.get_json()
+
+        title = data.get("title", None)
+        release_date = data.get("release_date", None)
+
+        movie = Movie(title=title, release_date=release_date)
+
+        if title is None or release_date is None:
+            abort(400)
+
+        try:
+            movie.insert()
+            return jsonify({
+                "success": True,
+                "movie": movie.format()
+            }), 201
         except Exception as e:
             abort(422)
 #----------------------------------------------------------------------------#
