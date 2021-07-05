@@ -33,6 +33,23 @@ def create_app(test_config=None):
             }), 200
         except Exception as e:
             abort(500)
+
+    @app.route('/movies/<int:id>', methods=['GET'])
+    def get_movie_by_id():
+        '''Return actor matching the id'''
+
+        try:
+            movie = Movie.movie.get(id)
+
+            if movie is None:
+                abort(404)
+            else:
+                return jsonify({
+                    'success': True,
+                    'movie': movie.format()
+                }), 200
+        except Exception as e:
+            abort(422)
 #----------------------------------------------------------------------------#
 # Actor Routes
 #----------------------------------------------------------------------------#
