@@ -60,6 +60,9 @@ class Movie(db.Model):
             'release_date': self.release_date
         }
 
+    def __repr__(self):
+        return f'id: {self.id} title: {self.title} release date: {self.release_date}'
+
 #----------------------------------------------------------------------------#
 # Actor table
 #----------------------------------------------------------------------------#
@@ -97,3 +100,6 @@ class Actor(db.Model):
             'age': self.age,
             'gender': self.gender
         }
+
+    def __repr__(self):
+        return f'id: {self.id} name: {self.first} {self.last} age: {self.age} gender: {self.gender}'
