@@ -105,6 +105,28 @@ def create_app(test_config=None):
         except Exception as e:
             db.session.rollback()
             abort(422)
+
+    @app.route('/movies/<int:id>', methods=['DELETE'])
+    def delete_movie(id):
+        '''Delete movie matching id from database'''
+
+        try:
+            movie = Movie.query.get(id)
+        except:
+            abort(500)
+
+        if movie is None:
+            abort(404)
+        
+        try:
+            movie.delete()
+            return jsonify({
+                'success': True,
+                'delete': id
+            }), 200
+        except Exception as e:
+            db.session.rollback()
+            abort(500)
 #----------------------------------------------------------------------------#
 # Actor Routes
 #----------------------------------------------------------------------------#
