@@ -27,7 +27,6 @@ def setup_db(app, database_path=DB_PATH):
     db.app = app
     db.init_app(app)
     migrate = Migrate(app, db)
-    db.create_all()
 
 def db_drop_and_create():
     db.drop_all()
