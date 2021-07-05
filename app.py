@@ -112,10 +112,30 @@ def create_app(test_config=None):
                 'actor': actor.format()
             }), 200
         except Exception as e:
+            db.session.rollback()
             abort(422)
 
+    @app.route('/actors/<int:id>', methods=['DELETE '])
+    def delete_actor(id):
+        '''Delete actor matching id from database'''
 
+        try:
+            actor = Actor.query.get(id)
+        except:
+            abort(500)
 
+        if actor is None:
+            abort(404)
+        
+        try:
+            actor.delete()
+            return jsonify({
+                'success': True,
+                'delete': id
+            }), 200
+        except Exception as e:
+            db.session.rollback()
+            abort(500)
 
     return app
 
