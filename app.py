@@ -32,6 +32,29 @@ def create_app(test_config=None):
             'message': 'Get actors'
         })
 
+    @app.route('/actors', methods=['POST'])
+    def add_actor():
+        """Create and insert new actor into database"""
+        data = request.get_json()
+
+        name = data["name", None]
+        age = data["age", None]
+        gender = data["gender", None]
+
+        actor = Actor(name=name, age=age, gender=gender)
+
+        if name is None or age is None or gender is None:
+            abort(400)
+
+        try:
+            actor.insert()
+            return jsonify({
+                "success": True,
+                "actor": actor.format()
+            }), 201
+        except Exception as e:
+            abort(422)
+
     return app
 
 APP = create_app()
