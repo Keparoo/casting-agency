@@ -1,7 +1,7 @@
 import os
 from sqlalchemy import Column, String, Integer, DateTime, create_engine
 from flask_sqlalchemy import SQLAlchemy
-#from flask_migrate import Migrate
+from flask_migrate import Migrate
 import json
 
 #----------------------------------------------------------------------------#
@@ -26,7 +26,12 @@ def setup_db(app, database_path=DB_PATH):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    #db.create_all()
+    migrate = Migrate(app, db)
+    db.create_all()
+
+def db_drop_and_create():
+    db.drop_all()
+    db.create_all()
 
 #----------------------------------------------------------------------------#
 # Movie table
@@ -70,14 +75,12 @@ class Actor(db.Model):
     __tablename__ = 'actors'
 
     id = Column(Integer, primary_key=True)
-    first = Column(String, nullable=False)
-    last = Column(String, nullable=False)
+    name = Column(String, nullable=False)
     age = Column(Integer, nullable=False)
     gender = Column(String, nullable=False)
     
-    def __init__(self, first, last, age, gender):
-        self.first = first
-        self.last = last
+    def __init__(self, name, age, gender):
+        self.name = name
         self.age = age
         self.gender = gender
     
@@ -95,11 +98,10 @@ class Actor(db.Model):
     def format(self):
         return {
             'id': self.id,
-            'first': self.first,
-            'last': self.last,
+            'name': self.name,
             'age': self.age,
             'gender': self.gender
         }
 
     def __repr__(self):
-        return f'id: {self.id} name: {self.first} {self.last} age: {self.age} gender: {self.gender}'
+        return f'id: {self.id} name: {self.name} age: {self.age} gender: {self.gender}'
