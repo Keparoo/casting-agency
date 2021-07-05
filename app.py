@@ -73,6 +73,38 @@ def create_app(test_config=None):
             }), 201
         except Exception as e:
             abort(422)
+
+    @app.route('/movies/<int:id>', methods=['PATCH'])
+    def update_movie(id):
+        '''Update movie info in database'''
+
+        data = request.get_json()
+        title = data.get('title', None)
+        release_date = data.get('release_date', None)
+
+        try:
+            movie = Movie.query.get(id)
+        except:
+            abort(500)
+
+        if movie is None:
+            abort(404)
+
+        if title is None or release_date is None:
+            abort(400)
+
+        movie.title = title
+        movie.release_date = release_date
+
+        try:
+            movie.update()
+            return jsonify({
+                'success': True,
+                'movie': movie.format()
+            }), 200
+        except Exception as e:
+            db.session.rollback()
+            abort(422)
 #----------------------------------------------------------------------------#
 # Actor Routes
 #----------------------------------------------------------------------------#
