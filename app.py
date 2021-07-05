@@ -40,10 +40,27 @@ def create_app(test_config=None):
         except Exception as e:
             abort(500)
 
+    @app.route('/actors/<int:id>', methods=['GET'])
+    def get_actor_by_id(id):
+        '''Return actor matching the id'''
+
+        try:
+            actor = Actor.query.get(id)
+
+            if actor is None:
+                abort(404)
+            else:
+                return jsonify({
+                    'success': True,
+                    'actor': actor.format()
+                }), 200
+        except Exception as e:
+            abort(422)
+
     @app.route('/actors', methods=['POST'])
     def add_actor():
         """Create and insert new actor into database"""
-        
+
         data = request.get_json()
 
         name = data["name", None]
@@ -63,6 +80,42 @@ def create_app(test_config=None):
             }), 201
         except Exception as e:
             abort(422)
+
+    @app.route('/actors/<int:id>', methods=['PATCH'])
+    def update_actor(id):
+        '''Update actor info in database'''
+
+        data = request.get_json()
+        name = data.get('name', None)
+        age = data.get('age', None)
+        gender = data.get('gender', None)
+
+        try:
+            actor = Actor.query.get(id)
+        except:
+            abort(500)
+
+        if actor is None:
+            abort(404)
+
+        if name is None or age is None or gender is None:
+            abort(400)
+
+        actor.name = name
+        actor.age = age
+        actor.gender = gender
+
+        try:
+            actor.update()
+            return jsonify({
+                'success': True,
+                'actor': actor.format()
+            }), 200
+        except Exception as e:
+            abort(422)
+
+
+
 
     return app
 
