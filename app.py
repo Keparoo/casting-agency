@@ -35,11 +35,11 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/movies/<int:id>', methods=['GET'])
-    def get_movie_by_id():
+    def get_movie_by_id(id):
         '''Return movie matching the id'''
 
         try:
-            movie = Movie.movie.get(id)
+            movie = Movie.query.get(id)
 
             if movie is None:
                 abort(404)
