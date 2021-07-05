@@ -28,13 +28,22 @@ def create_app(test_config=None):
 
     @app.route('/actors', methods=['GET'])
     def get_actors():
-        return jsonify({
-            'message': 'Get actors'
-        })
+        '''Return all actors from database'''
+
+        try:
+            actors = Actor.query.all()
+
+            return jsonify({
+                'success': 'True',
+                'actors': [actor.format() for actor in actors]
+            }), 200
+        except Exception as e:
+            abort(500)
 
     @app.route('/actors', methods=['POST'])
     def add_actor():
         """Create and insert new actor into database"""
+        
         data = request.get_json()
 
         name = data["name", None]
