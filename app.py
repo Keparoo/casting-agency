@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from models import setup_db, Movie, Actor, db
 import json
 from flask_cors import CORS
-from auth import AuthError, requires_auth
+# from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
     # create and configure the app
@@ -310,11 +310,11 @@ def create_app(test_config=None):
                 }
             ), 403
 
-    @app.errorhandler(AuthError)
-    def handle_auth_error(exception):
-        response = jsonify(exception.error)
-        response.status_code = exception.status_code
-        return response
+    # @app.errorhandler(AuthError)
+    # def handle_auth_error(exception):
+    #     response = jsonify(exception.error)
+    #     response.status_code = exception.status_code
+    #     return response
 
     return app
 
