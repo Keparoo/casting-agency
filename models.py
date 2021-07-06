@@ -18,9 +18,9 @@ database_path = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
-#----------------------------------------------------------------------------#
-# Setup database: bind flask app to SQLAlchemy service
-#----------------------------------------------------------------------------#
+'''
+    Binds a flask app to a SQLAlchemy service
+'''
 def setup_db(app, database_path=DB_PATH):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -28,6 +28,9 @@ def setup_db(app, database_path=DB_PATH):
     db.init_app(app)
     # migrate = Migrate(app, db)
 
+'''
+    Drops the database and creates an an empty one
+'''
 def db_drop_and_create():
     db.drop_all()
     db.create_all()
@@ -46,13 +49,25 @@ class Movie(db.Model):
         self.title = title
         self.release_date = release_date
     
+    '''
+        Inserts a new movie into the database
+        The title and release date must not be null
+    '''
     def insert(self):
         db.session.add(self)
         db.session.commit()
 
+    '''
+        Updates fields of an existing movie
+        The title and relase date must not be null
+    '''
     def update(self):
         db.session.commit()
 
+    '''
+        Deletes a movie from the database matching the sent id
+        If the movie does not exist a 404 error is sent
+    '''
     def delete(self):
         db.session.delete(self)
         db.session.commit()
@@ -83,13 +98,25 @@ class Actor(db.Model):
         self.age = age
         self.gender = gender
     
+    '''
+        Inserts a new actor into the database
+        The name, age, and gender must not be null
+    '''
     def insert(self):
         db.session.add(self)
         db.session.commit()
-
+    
+    '''
+        Updates fields of an existing actor
+        The name, age, and gender must not be null
+    '''
     def update(self):
         db.session.commit()
 
+    '''
+        Deletes an actor from the database matching the sent id
+        If the actor does not exist a 404 error is sent
+    '''
     def delete(self):
         db.session.delete(self)
         db.session.commit()
