@@ -191,12 +191,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_actors_before = Actor.query.all()
 
-        test_actor = {
-            'name': 'Marion Cotillard',
-            'age': 46,
-            'gender': 'female',
-        }
-        res = self.client().post('/actors', json=test_actor)
+        res = self.client().post('/actors', json=self.test_actor)
         data = json.loads(res.data)
 
         num_actors_after = Actor.query.all()
@@ -266,13 +261,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_update_actor(self):
         '''Tests succuss of update_actor'''
 
-        test_actor = {
-            'name': 'Marion Cotillard',
-            'age': 46,
-            'gender': 'female',
-        }
-
-        res = self.client().patch('/actors/1', json=test_actor)
+        res = self.client().patch('/actors/1', json=self.test_actor)
         data = json.loads(res.data)
 
         data = json.loads(res.data)
