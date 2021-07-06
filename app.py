@@ -10,17 +10,28 @@ def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
     setup_db(app)
-    CORS(app)
-    
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    @app.after_request
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Headers',
+                             'Content-Type,Authorization,true')
+        response.headers.add('Access-Control-Allow-Methods',
+                             'GET,PATCH,POST,DELETE,OPTIONS')
+        return response
 #----------------------------------------------------------------------------#
-# Movie Routes
+# API Endpoints
 #----------------------------------------------------------------------------#
     @app.route('/', methods=['GET'])
     def index():
+        '''Home page route'''
         return jsonify({
             'message': 'Welcome to the Casting Agency Home Page'
-        })
+        }) 
 
+#----------------------------------------------------------------------------#
+# Movie Routes
+#----------------------------------------------------------------------------#
     @app.route('/movies', methods=['GET'])
     def get_movies():
         '''Return all movies from database'''
