@@ -40,7 +40,7 @@ def create_app(test_config=None):
             movies = Movie.query.all()
 
             return jsonify({
-                'success': 'True',
+                'success': True,
                 'movies': [movie.format() for movie in movies]
             }), 200
         except Exception as e:
@@ -52,16 +52,17 @@ def create_app(test_config=None):
 
         try:
             movie = Movie.query.get(id)
-
-            if movie is None:
-                abort(404)
-            else:
-                return jsonify({
-                    'success': True,
-                    'movie': movie.format()
-                }), 200
         except Exception as e:
             abort(422)
+
+
+        if movie is None:
+            abort(404)
+        else:
+            return jsonify({
+                'success': True,
+                'movie': movie.format()
+            }), 200
 
     @app.route('/movies', methods=['POST'])
     def add_movie():
@@ -150,7 +151,7 @@ def create_app(test_config=None):
             actors = Actor.query.all()
 
             return jsonify({
-                'success': 'True',
+                'success': True,
                 'actors': [actor.format() for actor in actors]
             }), 200
         except Exception as e:
@@ -162,16 +163,16 @@ def create_app(test_config=None):
 
         try:
             actor = Actor.query.get(id)
-
-            if actor is None:
-                abort(404)
-            else:
-                return jsonify({
-                    'success': True,
-                    'actor': actor.format()
-                }), 200
         except Exception as e:
-            abort(422)
+            abort(422)   
+
+        if actor is None:
+            abort(404)
+        else:
+            return jsonify({
+                'success': True,
+                'actor': actor.format()
+            }), 200
 
     @app.route('/actors', methods=['POST'])
     def add_actor():
@@ -286,7 +287,7 @@ def create_app(test_config=None):
                 {
                     "success": False,
                     "error": 400,
-                    "message": "Bad Request, please check your inputs",
+                    "message": "bad request",
                 }
             ), 400
 
