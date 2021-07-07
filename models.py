@@ -11,7 +11,7 @@ import json
 if os.getenv('ENV') == 'test':
     database_path = os.getenv('TEST_DATABASE_URL')
 else:
-    database_path = os.getenv('NEW_DATABASE_URL')
+    database_path = os.getenv('DATABASE_URL')
 
 # DB_HOST = os.getenv('DB_HOST', '127.0.0.1:5432')
 # DB_USER = os.getenv('DB_USER', 'kep')
