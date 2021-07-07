@@ -1,10 +1,11 @@
 import os
 from flask import Flask, request, jsonify, abort
+from flask import render_template, session, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from models import setup_db, Movie, Actor, db
 import json
 from flask_cors import CORS
-# from auth import AuthError, requires_auth
+from auth import AuthError, requires_auth
 
 def create_app(test_config=None):
     # create and configure the app
@@ -25,15 +26,50 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET'])
     def index():
         '''Home page route'''
-        return jsonify({
-            'message': 'Welcome to the Casting Agency Home Page'
-        }) 
+        return render_template('index.html')
+        # return jsonify({
+        #     'message': 'Welcome to the Casting Agency Home Page'
+        # })
 
+    @app.route('/login')
+    def login():
+        return render_template('login.html')
+
+    @app.route('/logout')
+    def logout():
+        return render_template('logout.html')
+
+    # @app.route('/login')
+    # def login():
+    #     return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL,
+    #                                     audience=AUTH0_AUDIENCE)
+
+    # @app.route('/callback')
+    # def auth_callback():
+
+    #     res = auth0.authorize_access_token()
+    #     token = res.get('access_token')
+
+    #     session['jwt_token'] = token
+
+    #     return redirect('/dashboard')
+
+    # @app.route('/logout')
+    # def logout():
+    #     session.clear()
+    #     parameters = {'returnTo': url_for('index', _external=True), 'client_id': AUTH0_CLIENT_ID}
+    #     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(parameters))
+
+    # @app.route('/dashboard')
+    # @requires_signed_in
+    # def dashboard():
+    #     return render_template('dashboard.html', token=session['jwt_token'])
 #----------------------------------------------------------------------------#
 # Movie Routes
 #----------------------------------------------------------------------------#
     @app.route('/movies', methods=['GET'])
-    def get_movies():
+    @requires_auth('get:movies')
+    def get_movies(jwt):
         '''Return all movies from database'''
 
         try:
@@ -47,7 +83,8 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/movies/<int:id>', methods=['GET'])
-    def get_movie_by_id(id):
+    @requires_auth('get:movies')
+    def get_movie_by_id(jwt, id):
         '''Return movie matching the id'''
 
         try:
@@ -65,7 +102,8 @@ def create_app(test_config=None):
             }), 200
 
     @app.route('/movies', methods=['POST'])
-    def add_movie():
+    @requires_auth('post:movies')
+    def add_movie(jwt):
         """Create and insert new movie into database"""
 
         data = request.get_json()
@@ -88,7 +126,8 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:id>', methods=['PATCH'])
-    def update_movie(id):
+    @requires_auth('patch:movies')
+    def update_movie(jwt, id):
         '''Update movie info in database'''
 
         data = request.get_json()
@@ -120,7 +159,8 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    def delete_movie(id):
+    @requires_auth('delete:movies')
+    def delete_movie(jwt, id):
         '''Delete movie matching id from database'''
 
         try:
@@ -144,7 +184,8 @@ def create_app(test_config=None):
 # Actor Routes
 #----------------------------------------------------------------------------#
     @app.route('/actors', methods=['GET'])
-    def get_actors():
+    @requires_auth('get:actors')
+    def get_actors(jwt):
         '''Return all actors from database'''
 
         try:
@@ -158,7 +199,8 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/actors/<int:id>', methods=['GET'])
-    def get_actor_by_id(id):
+    @requires_auth('get:actors')
+    def get_actor_by_id(jwt, id):
         '''Return actor matching the id'''
 
         try:
@@ -175,7 +217,8 @@ def create_app(test_config=None):
             }), 200
 
     @app.route('/actors', methods=['POST'])
-    def add_actor():
+    @requires_auth('post:actors')
+    def add_actor(jwt):
         """Create and insert new actor into database"""
 
         data = request.get_json()
@@ -199,7 +242,8 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:id>', methods=['PATCH'])
-    def update_actor(id):
+    @requires_auth('patch:actors')
+    def update_actor(jwt, id):
         '''Update actor info in database'''
 
         data = request.get_json()
@@ -233,7 +277,8 @@ def create_app(test_config=None):
             abort(422)
 
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    def delete_actor(id):
+    @requires_auth('delete:actors')
+    def delete_actor(jwt, id):
         '''Delete actor matching id from database'''
 
         try:
@@ -311,11 +356,11 @@ def create_app(test_config=None):
                 }
             ), 403
 
-    # @app.errorhandler(AuthError)
-    # def handle_auth_error(exception):
-    #     response = jsonify(exception.error)
-    #     response.status_code = exception.status_code
-    #     return response
+    @app.errorhandler(AuthError)
+    def handle_auth_error(exception):
+        response = jsonify(exception.error)
+        response.status_code = exception.status_code
+        return response
 
     return app
 

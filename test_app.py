@@ -7,9 +7,9 @@ from app import create_app
 from models import setup_db, Actor, Movie
 
 #Insert JWT Constants
-CASTING_ASSISTANT=''
-CASTING_DIRECTOR=''
-EXECUTIVE_PRODUCER=''
+CASTING_ASSISTANT='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNWbGNMV1ZjeWVla3RUMXkzOEQ5RSJ9.eyJpc3MiOiJodHRwczovL3dlYnNlY3VyZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjBiZTcxYzU2MTJkODIwMDcwYTRlZWVlIiwiYXVkIjoiY2FzdGluZy1hZ2VuY3kiLCJpYXQiOjE2MjU2OTQ0MTcsImV4cCI6MTYyNTcwMTYxNywiYXpwIjoiMUtZaVFWMDY1dG1RaTc1MTNWbUQzS2E2VHh2TnB5UmwiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.TUN8zZbjd3B4tq2bOzvThpkR1Ynn-kjuKIzQDg9iyyIR03tM1R5F3yzC-d_xZnOpVOFmRtR6GvNq0240o43NYh2SEmx-OPgvMVBSCXTzGH8GLT2pUeL_cCo9I9ru47mgVARjPQRsEAnP_QExuOpbWhhHz2c6sdwYf7FpTDikK7aOzQezq4H6j5FRHarhSrlHp7SgagzDKO5t4TButV-30wOWLY9wG_9MdNhubY0ApIXfj9RPAarGahwv4JQdNf-Lz4TVez2gYR0woV4ajW0Fy-dqpELMsQ-aTExi5usYU2kCUzeb1YzFXoASGYU2YD3zYd4wTFd9HIGVp61XMDn3-w'
+CASTING_DIRECTOR='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNWbGNMV1ZjeWVla3RUMXkzOEQ5RSJ9.eyJpc3MiOiJodHRwczovL3dlYnNlY3VyZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjBlNjI2MDBmMGY5NzUwMDZhODIxMGM1IiwiYXVkIjoiY2FzdGluZy1hZ2VuY3kiLCJpYXQiOjE2MjU2OTU3NTUsImV4cCI6MTYyNTcwMjk1NSwiYXpwIjoiMUtZaVFWMDY1dG1RaTc1MTNWbUQzS2E2VHh2TnB5UmwiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbXX0.Axb4kz2xm_xuhxUESmVXHb1Do_gDcgZqeDaOO_5GbvGH6MHql01TvmVrxAC0NZp0J5jmXml5AkcUdpfilP4ci_jwkXlykPH46VaqSyzPiTchNzExaIaiMRxg06O-wH7Kmw2YBXH0F3aF8sxjwTrRQ823aZm2noU1Lx12wnqxRnN1Yd3HPsKWg3yOkpr0RDBBk6uyzq5ERDABLq59sCI1zBrVWBhs3KCrES1_ebJRVE0KNagnbn6bR562ShW6GMxT6nEiofKUIRidjX9f1xDIegMcO2uZz5QYdnjCyGd_MAbwuOD5LQB_7ZFKvDNZrnub0BwLf9e19EGP8mtWKI1Cqg'
+EXECUTIVE_PRODUCER='eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InNWbGNMV1ZjeWVla3RUMXkzOEQ5RSJ9.eyJpc3MiOiJodHRwczovL3dlYnNlY3VyZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjBiN2Y2MjM3M2NhOGMwMDY4OTU3YjBkIiwiYXVkIjoiY2FzdGluZy1hZ2VuY3kiLCJpYXQiOjE2MjU2OTMwODgsImV4cCI6MTYyNTcwMDI4OCwiYXpwIjoiMUtZaVFWMDY1dG1RaTc1MTNWbUQzS2E2VHh2TnB5UmwiLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTphY3RvcnMiLCJkZWxldGU6bW92aWVzIiwiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiLCJwYXRjaDphY3RvcnMiLCJwYXRjaDptb3ZpZXMiLCJwb3N0OmFjdG9ycyIsInBvc3Q6bW92aWVzIl19.FMme79obO4wLyVeXdJsAD1rn6RXg63Tf4EvFKpTkt85oSHUrsnZMjG9_l9Me2hHhgTsMth4bFUWmgO5r_4Gk8Ob6FS-9vPOM2emmdwTzEXmyP86CgnQQatENgi69IqCugRR_6p8XqBw75jWSsEIcs7RKWMRZ_8xop-VrnsjYHJezqZp3RKMLkr6MYhThNF4C6_goUMmg5tn8HmCfidkHkmQ844GWaXvMsbLdx2TGwwAhU_jIcJkpZI8URT7-tqJ6o7hg6cAdyn8x3owvv7gXFb0kfdIroCh6g6Z_3aiwd2E4i2cvrTfVkL6qF9Si58KOSwRzYoZ0OUhh2BH5VlVp9A'
 
 class CastingAgencyTestCase(unittest.TestCase):
     '''This class represents the Casting Agency Test Case'''
@@ -47,7 +47,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_movies_before = Movie.query.all()
 
-        res = self.client().post('/movies', json=self.test_movie)
+        res = self.client().post('/movies', json=self.test_movie, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_movies_after = Movie.query.all()
@@ -66,7 +66,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         num_movies_before = Movie.query.all()
 
         # no data sent to create movie
-        res = self.client().post('/movies', json={})
+        res = self.client().post('/movies', json={}, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_movies_after = Movie.query.all()
@@ -81,7 +81,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_get_all_movies(self):
         '''Tests get_movies success'''
 
-        res = self.client().get('/movies')
+        res = self.client().get('/movies', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -90,7 +90,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_get_movie_by_id(self):
         '''Tests getting movie by id'''
 
-        res = self.client().get('/movies/1')
+        res = self.client().get('/movies/1', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -102,7 +102,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_404_get_movie_by_id(self):
         '''Tests failure for invalid id number'''
 
-        res = self.client().get('/movies/9999')
+        res = self.client().get('/movies/9999', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -114,7 +114,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_update_movie(self):
         '''Tests succuss of update_movie'''
 
-        res = self.client().patch('/movies/1', json=self.test_movie)
+        res = self.client().patch('/movies/1', json=self.test_movie, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -130,7 +130,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_400_update_movie(self):
         '''Tests 400 failure of update_movie if no data sent'''
 
-        res = self.client().patch('/movies/1', json={})
+        res = self.client().patch('/movies/1', json={}, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -142,7 +142,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_404_update_movie(self):
         '''Tests 404 failure if update_movie sent bad id'''
 
-        res = self.client().patch('/movies/9999', json=self.test_movie)
+        res = self.client().patch('/movies/9999', json=self.test_movie, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -156,7 +156,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_movies_before = Movie.query.all()
 
-        res = self.client().delete('/movies/2')
+        res = self.client().delete('/movies/2', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_movies_after = Movie.query.all()
@@ -172,7 +172,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_movies_before = Movie.query.all()
 
-        res = self.client().delete('/movies/9999')
+        res = self.client().delete('/movies/9999', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_movies_after = Movie.query.all()
@@ -191,7 +191,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_actors_before = Actor.query.all()
 
-        res = self.client().post('/actors', json=self.test_actor)
+        res = self.client().post('/actors', json=self.test_actor, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_actors_after = Actor.query.all()
@@ -211,7 +211,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         num_actors_before = Actor.query.all()
 
         # no data sent to create actor
-        res = self.client().post('/actors', json={})
+        res = self.client().post('/actors', json={}, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_actors_after = Actor.query.all()
@@ -226,7 +226,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_get_all_actors(self):
         '''Tests get_actors success'''
 
-        res = self.client().get('/actors')
+        res = self.client().get('/actors', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -235,7 +235,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_get_actor_by_id(self):
         '''Tests getting actor by id'''
 
-        res = self.client().get('/actors/1')
+        res = self.client().get('/actors/1', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -249,7 +249,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_404_get_actor_by_id(self):
         '''Tests failure for invalid id number'''
 
-        res = self.client().get('/actors/9999')
+        res = self.client().get('/actors/9999', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -261,7 +261,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_update_actor(self):
         '''Tests succuss of update_actor'''
 
-        res = self.client().patch('/actors/1', json=self.test_actor)
+        res = self.client().patch('/actors/1', json=self.test_actor, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -275,7 +275,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_400_update_actor(self):
         '''Tests 400 failure of update_actor if no data sent'''
 
-        res = self.client().patch('/actors/1', json={})
+        res = self.client().patch('/actors/1', json={}, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -287,7 +287,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_404_update_actor(self):
         '''Tests 404 failure if update_actor sent bad id'''
 
-        res = self.client().patch('/actors/9999', json=self.test_actor)
+        res = self.client().patch('/actors/9999', json=self.test_actor, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         data = json.loads(res.data)
@@ -301,7 +301,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_actors_before = Actor.query.all()
 
-        res = self.client().delete('/actors/2')
+        res = self.client().delete('/actors/2', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_actors_after = Actor.query.all()
@@ -317,7 +317,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_actors_before = Actor.query.all()
 
-        res = self.client().delete('/actors/9999')
+        res = self.client().delete('/actors/9999', headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
 
         num_actors_after = Actor.query.all()
@@ -328,6 +328,55 @@ class CastingAgencyTestCase(unittest.TestCase):
         # number of actors is one less
         self.assertTrue(len(num_actors_before) == len(num_actors_after))
 
+#----------------------------------------------------------------------------#
+# Authorization Tests
+#----------------------------------------------------------------------------#
+    def test_unauthorised_add_movies(self):
+        response= self.client().post(
+            '/movies',
+            json=self.test_movie,
+            headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertTrue(data['description'], 'Permission not found')
+
+    def test_unauthorised_add_actors(self):
+        response= self.client().post(
+            '/actors',
+            json=self.test_actor,
+            headers={"Authorization": "Bearer " + CASTING_ASSISTANT}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertTrue(data['description'], 'Permission not found')
+
+    def test_unauthorised_in_edit_actor(self):
+        response= self.client().patch(
+            '/actors/1',
+            json=self.test_actor,
+            headers={"Authorization": "Bearer " + CASTING_ASSISTANT}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertTrue(data['description'], 'Permission not found')
+
+    def test_unauthorised_delete_movie(self):
+        response = self.client().delete(
+            '/movies/1',
+            headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(data['code'], 'unauthorized')
+        self.assertTrue(data['description'], 'Permission not found')
 
 if __name__ == "__main__":
     unittest.main()
