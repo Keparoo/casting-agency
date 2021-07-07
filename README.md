@@ -351,7 +351,7 @@ The error codes currently returned are:
 
 - 400 – bad request
 - 401 – unauthorized
-- 493 - forbidden
+- 403 - forbidden
 - 404 – resource not found
 - 422 – unprocessable
 - 500 – internal server error
