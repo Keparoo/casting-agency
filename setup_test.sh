@@ -1,4 +1,5 @@
 export ENV='test'
+export TEST_DATABASE_URL=postgresql+psycopg2://kep:password@127.0.0.1:5432/test_casting
 
 echo 'Drop tables'
 python manage.py db downgrade
