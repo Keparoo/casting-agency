@@ -7,21 +7,27 @@ import json
 #----------------------------------------------------------------------------#
 # Connect the database and environment variables
 #----------------------------------------------------------------------------#
-DB_HOST = os.getenv('DB_HOST', '127.0.0.1:5432')
-DB_USER = os.getenv('DB_USER', 'kep')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
-DB_NAME = os.getenv('DB_NAME', 'casting')
 
-DB_PATH = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+if os.getenv('ENV') == 'test':
+    database_path = os.getenv('TEST_DATABASE_URL')
+else:
+    database_path = os.getenv('DATABASE_URL')
 
-database_path = os.environ['DATABASE_URL']
+# DB_HOST = os.getenv('DB_HOST', '127.0.0.1:5432')
+# DB_USER = os.getenv('DB_USER', 'kep')
+# DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
+# DB_NAME = os.getenv('DB_NAME', 'casting')
+
+# DB_PATH = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
+
+# database_path = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
 '''
     Binds a flask app to a SQLAlchemy service
 '''
-def setup_db(app, database_path=DB_PATH):
+def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app

@@ -20,7 +20,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.client = self.app.test_client
 
         # Set up database
-        self.database_name = "casting"
+        self.database_name = "test_casting"
         self.database_path = "postgresql://{}:{}@{}/{}".format('kep','password','localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
@@ -97,7 +97,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['movie'])
-        self.assertEqual(data['movie']['title'], 'La Vie En Rose') 
+        self.assertEqual(data['movie']['title'], 'Call Me By Your Name') 
 
     def test_404_get_movie_by_id(self):
         '''Tests failure for invalid id number'''
@@ -156,14 +156,14 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_movies_before = Movie.query.all()
 
-        res = self.client().delete('/movies/37')
+        res = self.client().delete('/movies/2')
         data = json.loads(res.data)
 
         num_movies_after = Movie.query.all()
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['delete'], 37)
+        self.assertEqual(data['delete'], 2)
         # number of movies is one less
         self.assertTrue(len(num_movies_before) - len(num_movies_after) == 1)
 
@@ -242,9 +242,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['actor'])
-        self.assertEqual(data['actor']['name'], 'Marion Cotillard')
-        self.assertEqual(data['actor']['age'], 46)
-        self.assertEqual(data['actor']['gender'], 'female') 
+        self.assertEqual(data['actor']['name'], 'Timothee Chalamet')
+        self.assertEqual(data['actor']['age'], 26)
+        self.assertEqual(data['actor']['gender'], 'male') 
 
     def test_404_get_actor_by_id(self):
         '''Tests failure for invalid id number'''
@@ -301,14 +301,14 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         num_actors_before = Actor.query.all()
 
-        res = self.client().delete('/actors/10')
+        res = self.client().delete('/actors/2')
         data = json.loads(res.data)
 
         num_actors_after = Actor.query.all()
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['delete'], 10)
+        self.assertEqual(data['delete'], 2)
         # number of actors is one less
         self.assertTrue(len(num_actors_before) - len(num_actors_after) == 1)
 
