@@ -5,7 +5,7 @@ This is the capstone project for Udacity's Fullstack Nanodegree program. It mode
 ---
 ## API URL 
 - **Heroku:** [base URL](https://xxxx.herokuapp.com/)
-- **Localhost:** base URL is localhost:5000
+- **Localhost:** base URL is http://127.0.0.1:5000/
 
 
 ## Features
