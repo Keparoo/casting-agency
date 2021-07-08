@@ -4,7 +4,7 @@ This is the capstone project for Udacity's Fullstack Nanodegree program. It mode
 
 ---
 ## API URL 
-- **Heroku:** [base URL](https://xxxx.herokuapp.com/)
+- **Heroku:** [base URL](https://kep-casting-agency.herokuapp.com/)
 - **Localhost:** base URL is http://127.0.0.1:5000/
 
 
@@ -12,7 +12,7 @@ This is the capstone project for Udacity's Fullstack Nanodegree program. It mode
 - Create and manage a database of actors and movies for casting purposes.
 
 ## Authentication and Authorisation
-Authentication is implemented in the form of Role Based Access Control using Auth0
+Authentication is implemented in the form of RBAC (Role Based Access Control) using Auth0
 #### Roles
 - Executive Producer
 - Casting Director
@@ -32,11 +32,11 @@ git clone https://github.com/Keparoo/casting-agency.git
 - [Python 3.8.5](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python) Follow the instructions to install the latest version of python for your platform. This project was developed using Python 3.8.5 and the project will not run with versions of Python below 3.6.
 - [Flask](http://flask.pocoo.org/) is a lightweight backend microservices framework. Flask is required to handle requests and responses.
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server.
-- Flask-Migrate
-- PostgreSQL
+- [Flask-Migrate](https://flask-cors.readthedocs.io/en/latest/) is an extension that handles SQLAlchemy database migrations for Flask applications using Alembic. The database operations are made available through the Flask command-line interface.
+- [PostgreSQL](https://www.postgresql.org/docs/) is a powerful, open source object-relational database system
 - [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we'll use handle the lightweight sqlite database. You'll primarily work in app.py and can reference models.py.
-- Unittest
-- Auth0
+- [Unittest](https://docs.python.org/3/library/unittest.html)
+- [Auth0](https://auth0.com/docs/api/management/v2) is an adaptable authentication and authorization platform.
 
 #### Virtual Enviornment
 
@@ -66,7 +66,7 @@ This will install all of the required packages in the `requirements.txt` file.
 
 ## Database Setup
 
-The project uses  Postgresql databases.
+The project uses PostgreSQL databases.
 - Create two databases: One for **testing** and one for **development**
 ```bash
 createdb <database_name>
@@ -95,7 +95,18 @@ flask run
 ```bash
 source setup_test.sh
 ```
+---  
+### Authorization
+The following URL will allow auth0 login and generate a jwt for the currently setup auth0 account:
+- [Generate JWT](https://websecure.us.auth0.com/authorize?audience=casting-agency&response_type=token&client_id=1KYiQV065tmQi7513VmD3Ka6TxvNpyRl&redirect_uri=http://127.0.0.1:5000)  
 
+To create an authorization system matching the API see the docs at [Auth0](https://auth0.com/docs/api/management/v2)  
+- Create an auth0 account
+- In the auth0 dashboard create an application and API
+- Add authorized users
+- Create roles for the users
+- Create and assign permissions to the roles
+- Update the AUTH0_DOMAIN and API_AUDIENCE constants in the auth.py file
 ---
 ## API
 
@@ -108,7 +119,7 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 - General:
 
   - Returns a list of all the movies.
-  - Roles authorized : Casting Assistant, Casting Director, Executive Producer.
+  - Roles authorized : Casting Assistant, Casting Director, Executive Producer
 
 - Sample: `curl http://127.0.0.1:5000/movies`
 
@@ -134,8 +145,9 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 
 - General:
 
-  - Route for getting a specific movie.
-  - Roles authorized : Casting Assistant,Casting Director,Executive Producer.
+  - Route for getting a specific movie by id.
+  - Roles authorized : Casting Assistant, Casting Director, Executive Producer
+  - Returns a 404 if movie is not in database
 
 - Sample: `curl http://127.0.0.1:5000/movies/1`
 
@@ -154,8 +166,9 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 
 - General:
 
-  - Creates a new movie based on a payload.
-  - Roles authorized : Executive Producer.
+  - Creates a new movie based posted json payload.
+  - All fields must be populated
+  - Roles authorized : Executive Producer
 
 - Sample: `curl http://127.0.0.1:5000/movies -X POST -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band", "release_date": "2020-09-30" }'`
 
@@ -174,8 +187,10 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 
 - General:
 
-  - Patches a movie based on a payload.
-  - Roles authorized : Casting Director, Executive Producer.
+  - Updates a movie based on the json payload.
+  - All fields must be populated
+  - Roles authorized : Casting Director, Executive Producer
+  - Returns a 404 if movie is not in database
 
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X PATCH -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band Updated", "release_date": "2018-01-19" }'`
 
@@ -194,8 +209,9 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 
 - General:
 
-  - Deletes a movies by id form the url parameter.
-  - Roles authorized : Executive Producer.
+  - Deletes a movies by id from the URL parameter.
+  - Roles authorized : Executive Producer
+  - Returns a 404 if movie is not found
 
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X DELETE`
 
@@ -211,7 +227,7 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 - General:
 
   - Returns a list of all the actors.
-  - Roles authorized : Casting Assistant,Casting Director,Executive Producer.
+  - Roles authorized : Casting Assistant, Casting Director, Executive Producer
 
 - Sample: `curl http://127.0.0.1:5000/actors`
 
@@ -240,7 +256,8 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 - General:
 
   - Route for getting a specific actor.
-  - Roles authorized : Casting Assistant,Casting Director,Executive Producer.
+  - Roles authorized : Casting Assistant, Casting Director, Executive Producer
+  - Returns a 404 if actor is not found
 
 - Sample: `curl http://127.0.0.1:5000/actors/1`
 
@@ -260,8 +277,8 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 
 - General:
 
-  - Creates a new actor based on a payload.
-  - Roles authorized : Casting Director,Executive Producer.
+  - Creates a new actor based on a posted json payload.
+  - Roles authorized : Casting Director, Executive Producer.
 
 - Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{ "name": "Marion Cotillard", "age": 46, "gender": "female" }'`
 
@@ -282,7 +299,8 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 - General:
 
   - Patches an actor based on a payload.
-  - Roles authorized : Casting Director, Executive Producer.
+  - Roles authorized : Casting Director, Executive Producer
+  - Returns a 404 if actor is not in database
 
 - Sample: `curl http://127.0.0.1:5000/actors/3 -X PATCH -H "Content-Type: application/json" -d '{ "name": "Marion Cotillard Updated", "age": 20, "gender": "female" }'`
 
@@ -302,8 +320,9 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 
 - General:
 
-  - Deletes an actor by id form the url parameter.
-  - Roles authorized : Casting Director,Executive Producer.
+  - Deletes an actor by id form the URL parameter.
+  - Roles authorized : Casting Director, Executive Producer
+  - Returns a 404 if actor is not in database
 
 - Sample: `curl http://127.0.0.1:5000/actors/3 -X DELETE`
 
@@ -315,10 +334,10 @@ In order to use the API users need to be authenticated. JWT tokens can be genera
 ```
 ## Testing
 
-Replace the jwt tokens in test_app.py with the ones generated on the website.
+Replace the jwt tokens in test_app.py with the ones generated on the website. JWT tokens expire 24 hours from generation.
 
-For testing locally, we need to stop the development server and reset the database.
-To reset database and run the test suite, run
+For testing locally, stop the development server and reset the database.
+The following resets the database and runs the test suite:
 
 ```bash
 source setup_test.sh
@@ -328,7 +347,7 @@ source setup_test.sh
 
 ## Error Handling
 
-- 401 errors due to authorization are returned as
+- 401 and 403 errors due to authorization are returned as
 
 ```json
 {
