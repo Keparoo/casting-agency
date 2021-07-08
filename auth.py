@@ -5,7 +5,7 @@ from jose import jwt
 from urllib.request import urlopen
 
 #----------------------------------------------------------------------------#
-# Configure Auth0 information
+# Configure Auth0 constants
 #----------------------------------------------------------------------------#
 
 AUTH0_DOMAIN = 'websecure.us.auth0.com'
