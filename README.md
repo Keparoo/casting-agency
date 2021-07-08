@@ -40,7 +40,7 @@ git clone https://github.com/Keparoo/casting-agency.git
 
 #### Virtual Enviornment
 
-It is recommended to work within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+It is recommended to work within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
 
 ```bash
 python3 -m venv venv
@@ -79,7 +79,7 @@ createdb <database_name>
 - Change the database_url in setup.sh and setup_testing.sh to match the names of your development and testing databases
 
 ## Running the Server
-From within the project directory first ensure you are working using your created virtual environment.
+Switch to the project directory and ensure that the virtual environment is running.
 
 #### To run the **development** server, execute:  
 
