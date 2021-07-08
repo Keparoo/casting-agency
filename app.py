@@ -7,8 +7,13 @@ import json
 from flask_cors import CORS
 from auth import AuthError, requires_auth
 
+AUTH0_CALLBACK_URL = 'https://kep-casting-agency.herokuapp.com/callback'
+AUTH0_DOMAIN = 'websecure.us.auth0.com'
+API_AUDIENCE = 'casting-agency'
+
+# create and configure the Flask app
 def create_app(test_config=None):
-    # create and configure the app
+    
     app = Flask(__name__)
     setup_db(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -37,6 +42,7 @@ def create_app(test_config=None):
 
     @app.route('/logout')
     def logout():
+        session.clear()
         return render_template('logout.html')
 
     # @app.route('/login')
@@ -352,7 +358,7 @@ def create_app(test_config=None):
                 {
                     "success": False,
                     "error": 403,
-                    "message": "You are not allowed to access this resource",
+                    "message": "forbidden",
                 }
             ), 403
 
