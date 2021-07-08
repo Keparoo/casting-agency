@@ -27,12 +27,12 @@ class CastingAgencyTestCase(unittest.TestCase):
         # Create test variable data
         self.test_movie = {
             'title': 'La Vie En Rose',
-            'release_date': '2007-07-20',
+            'release_date': '2007-07-20'
         }
         self.test_actor = {
             'name': 'Marion Cotillard',
             'age': 46,
-            'gender': 'female',
+            'gender': 'female'
         }
 
     def tearDown(self):
