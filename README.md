@@ -35,7 +35,7 @@ git clone https://github.com/Keparoo/casting-agency.git
 - [Flask-Migrate](https://flask-cors.readthedocs.io/en/latest/) is an extension that handles SQLAlchemy database migrations for Flask applications using Alembic. The database operations are made available through the Flask command-line interface.
 - [PostgreSQL](https://www.postgresql.org/docs/) is a powerful, open source object-relational database system
 - [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we'll use handle the lightweight sqlite database. You'll primarily work in app.py and can reference models.py.
-- [Unittest](https://docs.python.org/3/library/unittest.html)
+- [Unittest](https://docs.python.org/3/library/unittest.html) is a Python testing framework.
 - [Auth0](https://auth0.com/docs/api/management/v2) is an adaptable authentication and authorization platform.
 
 #### Virtual Enviornment
