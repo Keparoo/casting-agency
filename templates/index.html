@@ -7,10 +7,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casting Agency</title>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+
+    <style>
+        #token {
+            width: 800px;
+            word-wrap: break-word;
+            margin: 10px, 10px, 10px, 0px;
+            padding: 10px;
+            border: 1px solid black
+        }
+
+        #container {
+            margin: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Casting Agency Home</h1>
+    <div id="container">
+        <h1>Casting Agency Home</h1>
+        <p>Bearer Token:</p>
+        <div id="token" style="width: 600px">
+            <p id='jwt'></p>
+        </div>
+        <button onclick="selectText('jwt');">Select & Copy JWT</button>
+    </div>
+
+    <script>
+        function selectText(containerid) {
+            if (document.selection) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(document.getElementById(containerid));
+                range.select();
+                document.execCommand('copy')
+            } else if (window.getSelection) {
+                var range = document.createRange();
+                range.selectNode(document.getElementById(containerid));
+                window.getSelection().addRange(range);
+                document.execCommand('copy')
+            }
+        }
+
+        const queryString = window.location.href;
+        const jwt = queryString.split(/&/)[0].split(/#/)[1].split(/=/)[1]
+        console.log(jwt)
+        document.getElementById('jwt').innerHTML = jwt
+
+    </script>
 </body>
 
 </html>
