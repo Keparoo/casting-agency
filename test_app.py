@@ -75,7 +75,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertTrue(data['error'])
         self.assertEqual(data["message"], "bad request")
-        # number of questions doesn't change
+        # check number of movies doesn't change
         self.assertTrue(len(num_movies_after) == len(num_movies_before))
 
     def test_get_all_movies(self):
@@ -164,7 +164,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['delete'], 2)
-        # number of movies is one less
+        # check number of movies is one less
         self.assertTrue(len(num_movies_before) - len(num_movies_after) == 1)
 
     def test_404_delete_movie(self):
@@ -180,7 +180,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'resource not found')
-        # number of movies is one less
+        # check number of movies is one less
         self.assertTrue(len(num_movies_before) == len(num_movies_after))
 
 #----------------------------------------------------------------------------#
@@ -220,7 +220,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertTrue(data['error'])
         self.assertEqual(data["message"], "bad request")
-        # number of questions doesn't change
+        # check number of actors doesn't change
         self.assertTrue(len(num_actors_after) == len(num_actors_before))
 
     def test_get_all_actors(self):
@@ -309,7 +309,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['delete'], 2)
-        # number of actors is one less
+        # check number of actors is one less
         self.assertTrue(len(num_actors_before) - len(num_actors_after) == 1)
 
     def test_404_delete_actor(self):
@@ -325,7 +325,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'resource not found')
-        # number of actors is one less
+        # check number of actors is one less
         self.assertTrue(len(num_actors_before) == len(num_actors_after))
 
 #----------------------------------------------------------------------------#
