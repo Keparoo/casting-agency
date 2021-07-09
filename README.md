@@ -180,10 +180,10 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
   - All fields must be populated:
   - Request Body: 
   ```json
-  {
-    "title": "The Boys in the Band"
-	"release_date": "2020-09-30"
-  }
+    {
+        "title": "The Boys in the Band",
+        "release_date": "2020-09-30"
+    }
   ```
 
 - Sample: `curl http://127.0.0.1:5000/movies -X POST -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band", "release_date": "2020-09-30" }'`
@@ -211,10 +211,10 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
   - All fields must be populated
   - Request Body:
   ```json
-  {
-    "title": "The Boys in the Band Updated"
-	"release_date": "2018-01-19"
-  }
+    {
+      "title": "The Boys in the Band Updated",
+      "release_date": "2018-01-19"
+    }
   ```
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X PATCH -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band Updated", "release_date": "2018-01-19" }'`
 
