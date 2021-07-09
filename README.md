@@ -114,6 +114,9 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 ### Endpoints
 
+- Note: any `curl` commands used must include an authorization header as all endpoints require authorization to use:  
+`curl -H "Authorization: Bearer <JWT_ACCESS_TOKEN>"`
+
 #### GET /movies
 
 - General:
