@@ -26,7 +26,7 @@ def get_token_auth_header():
   '''
   Gets request header, raising AuthError if no header is present
   Splits bearer and token raising AuthError if header is malformed
-  Returns the token part of the header
+  Returns the token part of the header if successful
   '''
   auth_header = request.headers.get('Authorization', None)
   if not auth_header:
@@ -51,11 +51,14 @@ def get_token_auth_header():
   return header_parts[1]
 
 def check_permissions(permission, payload):
-  '''
-  Inputs the string permission (i.e. 'post:drink) and decoded jwt payload
-  Raises an AuthError if permissions are not included in payload
-  Raises and AuthError if the requested permission string is not in the payload permissions array
-  Otherwise returns True
+  '''@INPUTS
+    permission: string permission (i.e. 'get:movies')
+    payload: decoded JWT payload
+
+    Response:
+        Raises an AuthError if the permissions are not included in the payload
+        Raises an AuthError if the requested permission string is not in the payload permissions array
+        Returns True if otherwise
   '''
   if 'permissions' not in payload:
     raise AuthError({
@@ -71,13 +74,18 @@ def check_permissions(permission, payload):
   return True
 
 def verify_decode_jwt(token):
-  '''
-  Inputs a json web token (jwt) string
-  Completes the following:
-    Verifies the JWT is an Auth0 token with key id (kid)
-    It decodes the payload from the token
-    It validates the claims
-    It returns the decoded payload
+  '''@INPUTS
+    token: a JSON web token (JWT) string
+  
+    Request:
+        Checks that the Auth0 token has the key id (kid)
+        Verifis the token using Auth0 /.well-known/jwks.json
+        Decodes the payload from the token
+        Validates the claims
+
+    Response:
+        Returns the decoded payload
+        If not valid, raises AuthError exception
   '''
 
   # GET THE PUBLIC KEY FROM AUTH0
@@ -139,9 +147,16 @@ def verify_decode_jwt(token):
         }, 400)
 
 def requires_auth(permission=''):
-  '''
-  Inputs permission string (i.e. 'post:movie')
-  Gets the token, verifies & decodes the jwt, checks and validates claims
+  '''@INPUTS
+    permission: string permission (i.e. get:movies)
+
+    Request:
+        The get_token_auth_header method gets the token
+        The verify_decode_jwt method decodes the JWT
+        The check_permissions method validates the claims and checks the requested permission
+
+    Response:
+        Returns the decorator which passes the decoded payload to the decorated method
   '''
   def requires_auth_decorator(f):
       @wraps(f)
@@ -152,7 +167,7 @@ def requires_auth(permission=''):
             check_permissions(permission, payload)
         except AuthError as err:
             abort(401, err.error)
-            
+
         return f(payload, *args, **kwargs)
 
       return wrapper
