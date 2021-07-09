@@ -44,6 +44,10 @@ def create_app(test_config=None):
     def logout():
         session.clear()
         return render_template('logout.html')
+    
+    @app.route('/jwtcontrol')
+    def jwtcontrol():
+        return render_template('jwtcontrol.html')
 
     # @app.route('/login')
     # def login():
