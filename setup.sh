@@ -5,9 +5,9 @@ export FLASK_DEBUG=True
 # development, production, test
 export ENV='development'
 
-export AUTH0_CLIENT_ID=
+export AUTH0_CLIENT_ID=''
 export AUTH0_DOMAIN='websecure.us.auth0.com'
-export API_AUDIENCE = 'casting-agency'
+export API_AUDIENCE='casting-agency'
 
 alias err98="ps -fA | grep python"
 
