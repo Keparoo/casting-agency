@@ -339,9 +339,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         )
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(data['code'], 'unauthorized')
-        self.assertTrue(data['description'], 'Permission not found')
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
 
     def test_unauthorised_add_actors(self):
         response= self.client().post(
@@ -351,9 +351,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         )
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(data['code'], 'unauthorized')
-        self.assertTrue(data['description'], 'Permission not found')
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
 
     def test_unauthorised_in_edit_actor(self):
         response= self.client().patch(
@@ -363,9 +363,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         )
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(data['code'], 'unauthorized')
-        self.assertTrue(data['description'], 'Permission not found')
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
 
     def test_unauthorised_delete_movie(self):
         response = self.client().delete(
@@ -374,9 +374,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         )
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 403)
-        self.assertEqual(data['code'], 'unauthorized')
-        self.assertTrue(data['description'], 'Permission not found')
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
 
 if __name__ == "__main__":
     unittest.main()

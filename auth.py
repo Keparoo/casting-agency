@@ -140,17 +140,20 @@ def verify_decode_jwt(token):
 
 def requires_auth(permission=''):
   '''
-  Inputs permission string (i.e. 'post:drink')
+  Inputs permission string (i.e. 'post:movie')
   Gets the token, verifies & decodes the jwt, checks and validates claims
   '''
   def requires_auth_decorator(f):
       @wraps(f)
       def wrapper(*args, **kwargs):
-          token = get_token_auth_header()
-          #possible try except here
-          payload = verify_decode_jwt(token)
-          check_permissions(permission, payload)
-          return f(payload, *args, **kwargs)
+        try:
+            token = get_token_auth_header()
+            payload = verify_decode_jwt(token)
+            check_permissions(permission, payload)
+        except AuthError as err:
+            abort(401, err.error)
+            
+        return f(payload, *args, **kwargs)
 
       return wrapper
   return requires_auth_decorator
