@@ -11,19 +11,35 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
+        body {
+            background-color: rgb(169, 223, 223)
+        }
+
         .buttons {
-            /* width: 1000px; */
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
             margin-top: 15px;
         }
 
         h3 {
             margin-bottom: 45px;
         }
+
+        .container {
+            width: 950px;
+        }
+
+        textarea {
+            height: 350px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
         <div>
             <h1 class="text-center">Welcome to the Kep Casting Agency API</h1>
             <h3 class="text-center">An API and database to manage actors and movies</h3>
@@ -33,7 +49,8 @@
             <p>To interact with the API, authenticate using the following JWT token</p>
             <div>
                 <p id='jwt'></p>
-                <textarea id="token" cols="80" rows="15">{{ token }}</textarea>
+                <textarea id="token" class="col-8 row-4">{{ token }}</textarea>
+                <!-- cols="80" rows="15" -->
             </div>
             <div class="buttons row justify-content-center">
                 <div class="col-4">
