@@ -5,16 +5,22 @@ from flask_sqlalchemy import SQLAlchemy
 from models import setup_db, Movie, Actor, db
 import json
 from flask_cors import CORS
-from auth import AuthError, requires_auth
+from auth import AuthError, requires_auth, requires_signed_in
+from urllib.parse import urlencode
+from authlib.integrations.flask_client import OAuth
 
-AUTH0_CALLBACK_URL = 'https://kep-casting-agency.herokuapp.com/callback'
-AUTH0_DOMAIN = 'websecure.us.auth0.com'
-API_AUDIENCE = 'casting-agency'
+AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
+AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
+AUTH0_AUDIENCE = os.environ['API_AUDIENCE']
+AUTH0_BASE_URL='https://' + AUTH0_DOMAIN
 
 # create and configure the Flask app
 def create_app(test_config=None):
     
     app = Flask(__name__)
+    app.secret_key = "really super secret"
     setup_db(app)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -25,6 +31,20 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods',
                              'GET,PATCH,POST,DELETE,OPTIONS')
         return response
+
+    oauth = OAuth(app)
+
+    auth0 = oauth.register(
+        'auth0',
+        client_id=AUTH0_CLIENT_ID,
+        client_secret=AUTH0_CLIENT_SECRET,
+        api_base_url=AUTH0_BASE_URL,
+        access_token_url=AUTH0_BASE_URL + '/oauth/token',
+        authorize_url=AUTH0_BASE_URL + '/authorize',
+        client_kwargs={
+            'scope': 'openid profile email',
+        },
+    )
 #----------------------------------------------------------------------------#
 # API Endpoints
 #----------------------------------------------------------------------------#
@@ -38,42 +58,33 @@ def create_app(test_config=None):
 
     @app.route('/login')
     def login():
-        return render_template('login.html')
+        return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL, audience=AUTH0_AUDIENCE)
+        # params = {'audience': API_AUDIENCE, 'response_type': 'token','client_id': AUTH0_CLIENT_ID, 'redirect_uri': url_for('jwtcontrol', _external=True)}
+        # return redirect(AUTH0_BASE_URL + '/authorize?' + urlencode(params))
+        # return render_template('login.html')
+
+    @app.route('/callback')
+    def callback():
+        # Handles callback response from Auth0
+        res = auth0.authorize_access_token()
+        token = res.get('access_token')
+
+        # Store the user jwt token in flask session
+        session['jwt_token'] = token
+        
+        return redirect('/jwtcontrol')
 
     @app.route('/logout')
     def logout():
         session.clear()
-        return render_template('logout.html')
+        params = {'returnTo': url_for('index', _external=True), 'client_id': AUTH0_CLIENT_ID}
+        return redirect(AUTH0_BASE_URL + '/v2/logout?' + urlencode(params))
     
     @app.route('/jwtcontrol')
+    @requires_signed_in
     def jwtcontrol():
-        return render_template('jwtcontrol.html')
+        return render_template('jwtcontrol.html', token=session['jwt_token'])
 
-    # @app.route('/login')
-    # def login():
-    #     return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL,
-    #                                     audience=AUTH0_AUDIENCE)
-
-    # @app.route('/callback')
-    # def auth_callback():
-
-    #     res = auth0.authorize_access_token()
-    #     token = res.get('access_token')
-
-    #     session['jwt_token'] = token
-
-    #     return redirect('/dashboard')
-
-    # @app.route('/logout')
-    # def logout():
-    #     session.clear()
-    #     parameters = {'returnTo': url_for('index', _external=True), 'client_id': AUTH0_CLIENT_ID}
-    #     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(parameters))
-
-    # @app.route('/dashboard')
-    # @requires_signed_in
-    # def dashboard():
-    #     return render_template('dashboard.html', token=session['jwt_token'])
 #----------------------------------------------------------------------------#
 # Movie Routes
 #----------------------------------------------------------------------------#

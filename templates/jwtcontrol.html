@@ -31,32 +31,20 @@
     <div id="container">
         <h1>JWT Control Center</h1>
         <p>Bearer Token:</p>
-        <div id="token" style="width: 600px">
+        <div>
             <p id='jwt'></p>
+            <textarea id="token" cols="80" rows="15">{{ token }}</textarea>
         </div>
-        <button onclick="selectText('jwt');">Select & Copy JWT</button>
+        <a href="/logout">Logout</a><br>
+        <button onclick="copyJWT()">Copy JWT</button>
     </div>
 
     <script>
-        function selectText(containerid) {
-            if (document.selection) {
-                var range = document.body.createTextRange();
-                range.moveToElementText(document.getElementById(containerid));
-                range.select();
-                document.execCommand('copy')
-            } else if (window.getSelection) {
-                var range = document.createRange();
-                range.selectNode(document.getElementById(containerid));
-                window.getSelection().addRange(range);
-                document.execCommand('copy')
-            }
+        function copyJWT() {
+            const jwt = document.getElementById("token");
+            jwt.select();
+            document.execCommand("copy").trim();
         }
-
-        const queryString = window.location.href;
-        const jwt = queryString.split(/&/)[0].split(/#/)[1].split(/=/)[1]
-        console.log(jwt)
-        document.getElementById('jwt').innerHTML = jwt
-
     </script>
 </body>
 

@@ -1,5 +1,5 @@
 import json
-from flask import request, _request_ctx_stack, abort
+from flask import request, _request_ctx_stack, abort, redirect, session
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
@@ -175,3 +175,12 @@ def requires_auth(permission=''):
 
       return wrapper
   return requires_auth_decorator
+
+def requires_signed_in(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if 'jwt_token' not in session:
+            return redirect('/')
+        return f(*args, **kwargs)
+
+    return decorated
