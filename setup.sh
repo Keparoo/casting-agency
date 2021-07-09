@@ -11,5 +11,5 @@ export API_AUDIENCE='casting-agency'
 
 alias err98="ps -fA | grep python"
 
-export NEW_DATABASE_URL=postgresql+psycopg2://kep:password@127.0.0.1:5432/casting
+export DATABASE_URL=postgresql+psycopg2://kep:password@127.0.0.1:5432/casting
 export TEST_DATABASE_URL=postgresql+psycopg2://kep:password@127.0.0.1:5432/test_casting

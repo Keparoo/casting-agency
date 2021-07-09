@@ -11,16 +11,19 @@ import json
 if os.getenv('ENV') == 'test':
     database_path = os.getenv('TEST_DATABASE_URL')
 else:
-    database_path = os.getenv('NEW_DATABASE_URL')
+    # SQLAlchemy 1.4 removed support for postgres://
+    # Heroku sets the DATABASE_URL to this and can't be changed
+    database_path = os.getenv('DATABASE_URL')
+    if database_path.startswith('postgres://'):
+        database_path = database_path.replace('postgres://', 'postgresql://', 1)
 
+# If building URL in pieces use the following code
 # DB_HOST = os.getenv('DB_HOST', '127.0.0.1:5432')
 # DB_USER = os.getenv('DB_USER', 'kep')
 # DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
 # DB_NAME = os.getenv('DB_NAME', 'casting')
-
 # DB_PATH = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
 
-# database_path = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
