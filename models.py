@@ -13,6 +13,7 @@ if os.getenv('ENV') == 'test':
 else:
     # SQLAlchemy 1.4 removed support for postgres://
     # Heroku sets the DATABASE_URL to this and can't be changed
+    # https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
     database_path = os.getenv('DATABASE_URL')
     if database_path.startswith('postgres://'):
         database_path = database_path.replace('postgres://', 'postgresql://', 1)
