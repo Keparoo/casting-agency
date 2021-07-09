@@ -29,6 +29,7 @@ else:
 db = SQLAlchemy()
 
 '''
+setup_db(app)
     Binds a flask app to a SQLAlchemy service
 '''
 def setup_db(app, database_path=database_path):
@@ -40,6 +41,7 @@ def setup_db(app, database_path=database_path):
     # migrate = Migrate(app, db)
 
 '''
+db_drop_and_create()
     Drops the database and creates an an empty one
 '''
 def db_drop_and_create():
@@ -61,6 +63,7 @@ class Movie(db.Model):
         self.release_date = release_date
     
     '''
+    insert()
         Inserts a new movie into the database
         The title and release date must not be null
     '''
@@ -69,6 +72,7 @@ class Movie(db.Model):
         db.session.commit()
 
     '''
+    update()
         Updates fields of an existing movie
         The title and relase date must not be null
     '''
@@ -76,6 +80,7 @@ class Movie(db.Model):
         db.session.commit()
 
     '''
+    delete()
         Deletes a movie from the database matching the sent id
         If the movie does not exist a 404 error is sent
     '''
@@ -83,6 +88,10 @@ class Movie(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    '''
+    format()
+        returns the movie as an object
+    '''
     def format(self):
         return {
             'id': self.id,
@@ -110,6 +119,7 @@ class Actor(db.Model):
         self.gender = gender
     
     '''
+    insert()
         Inserts a new actor into the database
         The name, age, and gender must not be null
     '''
@@ -118,6 +128,7 @@ class Actor(db.Model):
         db.session.commit()
     
     '''
+    update()
         Updates fields of an existing actor
         The name, age, and gender must not be null
     '''
@@ -125,6 +136,7 @@ class Actor(db.Model):
         db.session.commit()
 
     '''
+    delete()
         Deletes an actor from the database matching the sent id
         If the actor does not exist a 404 error is sent
     '''
@@ -132,6 +144,11 @@ class Actor(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    '''
+    format()
+        Returns the actor as an object
+    '''
+    
     def format(self):
         return {
             'id': self.id,
