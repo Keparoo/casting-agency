@@ -28,36 +28,29 @@
 </head>
 
 <body>
-    <div id="container">
-        <h1>Casting Agency Home</h1>
-        <p>Bearer Token:</p>
-        <div id="token" style="width: 600px">
-            <p id='jwt'></p>
+    <div class="container">
+        <h1>Kep Casting Agency</h1>
+        <h3>An API and database to manage actors and movies</h3>
+        <h2>Login Credentials</h2>
+        <div>
+            <p>Casting Assistant</p>
+            <p>Username: assistant@casting-agency.com</p>
+            <p>Password: Casting4@</p>
         </div>
-        <button onclick="selectText('jwt');">Select & Copy JWT</button>
+        <div>
+            <p>Casting Director</p>
+            <p>Username: director@casting-agency.com</p>
+            <p>Password: Casting4@</p>
+        </div>
+        <div>
+            <p>Executive Producer</p>
+            <p>Username: producer@casting-agency.com</p>
+            <p>Password: Casting4@</p>
+        </div>
+
+        <a
+            href="https://websecure.us.auth0.com/authorize?audience=casting-agency&response_type=token&client_id=1KYiQV065tmQi7513VmD3Ka6TxvNpyRl&redirect_uri=http://127.0.0.1:5000/jwtcontrol">Button</a>
     </div>
-
-    <script>
-        function selectText(containerid) {
-            if (document.selection) {
-                var range = document.body.createTextRange();
-                range.moveToElementText(document.getElementById(containerid));
-                range.select();
-                document.execCommand('copy')
-            } else if (window.getSelection) {
-                var range = document.createRange();
-                range.selectNode(document.getElementById(containerid));
-                window.getSelection().addRange(range);
-                document.execCommand('copy')
-            }
-        }
-
-        const queryString = window.location.href;
-        const jwt = queryString.split(/&/)[0].split(/#/)[1].split(/=/)[1]
-        console.log(jwt)
-        document.getElementById('jwt').innerHTML = jwt
-
-    </script>
 </body>
 
 </html>
