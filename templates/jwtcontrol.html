@@ -12,7 +12,7 @@
 
     <style>
         .buttons {
-            width: 3032px;
+            /* width: 1000px; */
             margin-top: 15px;
         }
 
@@ -24,21 +24,25 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center">Welcome to the Kep Casting Agency API</h1>
-        <h3 class="text-center">An API and database to manage actors and movies</h3>
-        <p>To interact with the API, authenticate using the following JWT token</p>
         <div>
-            <p id='jwt'></p>
-            <textarea id="token" cols="80" rows="15">{{ token }}</textarea>
+            <h1 class="text-center">Welcome to the Kep Casting Agency API</h1>
+            <h3 class="text-center">An API and database to manage actors and movies</h3>
         </div>
-        <div class="buttons row">
-            <div class="col-2">
-                <button class='btn btn-primary' onclick="copyJWT()">Copy JWT</button>
-            </div>
-            <div class="col-8">
-                <a class='btn btn-danger' href="/logout">Logout</a>
-            </div>
 
+        <div class="container text-center">
+            <p>To interact with the API, authenticate using the following JWT token</p>
+            <div>
+                <p id='jwt'></p>
+                <textarea id="token" cols="80" rows="15">{{ token }}</textarea>
+            </div>
+            <div class="buttons row justify-content-center">
+                <div class="col-4">
+                    <button class='btn btn-primary' onclick="copyJWT()">Copy JWT</button>
+                </div>
+                <div class="col-4">
+                    <a class='btn btn-danger' href="/logout">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
 
