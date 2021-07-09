@@ -6,37 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casting Agency</title>
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+    <!-- <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
-        #token {
-            width: 800px;
-            word-wrap: break-word;
-            margin: 10px, 10px, 10px, 0px;
-            padding: 10px;
-            border: 1px solid black
+        .buttons {
+            width: 3032px;
+            margin-top: 15px;
         }
 
-        #container {
-            margin: 10px;
-        }
-
-        button {
-            margin-top: 10px;
+        h3 {
+            margin-bottom: 45px;
         }
     </style>
 </head>
 
 <body>
-    <div id="container">
-        <h1>JWT Control Center</h1>
-        <p>Bearer Token:</p>
+    <div class="container">
+        <h1 class="text-center">Welcome to the Kep Casting Agency API</h1>
+        <h3 class="text-center">An API and database to manage actors and movies</h3>
+        <p>To interact with the API, authenticate using the following JWT token</p>
         <div>
             <p id='jwt'></p>
             <textarea id="token" cols="80" rows="15">{{ token }}</textarea>
         </div>
-        <a href="/logout">Logout</a><br>
-        <button onclick="copyJWT()">Copy JWT</button>
+        <div class="buttons row">
+            <div class="col-2">
+                <button class='btn btn-primary' onclick="copyJWT()">Copy JWT</button>
+            </div>
+            <div class="col-8">
+                <a class='btn btn-danger' href="/logout">Logout</a>
+            </div>
+
+        </div>
     </div>
 
     <script>

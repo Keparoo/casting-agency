@@ -6,49 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casting Agency</title>
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+    <!-- <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <style>
-        #token {
-            width: 800px;
-            word-wrap: break-word;
-            margin: 10px, 10px, 10px, 0px;
-            padding: 10px;
-            border: 1px solid black
-        }
-
-        #container {
-            margin: 10px;
-        }
-
-        button {
-            margin-top: 10px;
-        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Kep Casting Agency</h1>
-        <h3>An API and database to manage actors and movies</h3>
+        <h1 class="text-center">Welcome to the Kep Casting Agency</h1>
+        <h3 class="text-center">An API and database to manage actors and movies</h3>
         <h2>Login Credentials</h2>
-        <div>
-            <p>Casting Assistant</p>
-            <p>Username: assistant@casting-agency.com</p>
-            <p>Password: Casting4@</p>
-        </div>
-        <div>
-            <p>Casting Director</p>
-            <p>Username: director@casting-agency.com</p>
-            <p>Password: Casting4@</p>
-        </div>
-        <div>
-            <p>Executive Producer</p>
-            <p>Username: producer@casting-agency.com</p>
-            <p>Password: Casting4@</p>
+        <div class="row">
+            <div class="col-md-4">
+                <p><strong>Casting Assistant</strong></p>
+                <p>Username: assistant@casting-agency.com</p>
+                <p>Password: Casting4@</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Casting Director</strong></p>
+                <p>Username: director@casting-agency.com</p>
+                <p>Password: Casting4@</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Executive Producer</strong></p>
+                <p>Username: producer@casting-agency.com</p>
+                <p>Password: Casting4@</p>
+            </div>
         </div>
 
-        <a href="/login">Login</a>
+
+        <a class="btn btn-primary" href="/login">Login</a>
     </div>
 </body>
 
