@@ -118,8 +118,10 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Returns a list of all the movies.
+  - Returns a list of all the movies in database.
+  - Request arguments: None
   - Roles authorized : Casting Assistant, Casting Director, Executive Producer
+  - Required permission: `get:movies`
 
 - Sample: `curl http://127.0.0.1:5000/movies`
 
@@ -145,8 +147,10 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Route for getting a specific movie by id.
+  - Returns the specific movie matching the provided id.
+  - Request arguments: id (The ID of the movie)
   - Roles authorized : Casting Assistant, Casting Director, Executive Producer
+  - Required permission: `get:movies`
   - Returns a 404 if movie is not in database
 
 - Sample: `curl http://127.0.0.1:5000/movies/1`
@@ -166,9 +170,18 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Creates a new movie based posted json payload.
-  - All fields must be populated
+  - Creates a new movie with the provided parameters.
+  - Request arguments: None
   - Roles authorized : Executive Producer
+  - Required permission: `post:movies`
+  - All fields must be populated:
+  - Request Body: 
+  ```json
+  {
+    "title": "The Boys in the Band"
+	"release_date": "2020-09-30"
+  }
+  ```
 
 - Sample: `curl http://127.0.0.1:5000/movies -X POST -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band", "release_date": "2020-09-30" }'`
 
@@ -187,11 +200,19 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Updates a movie based on the json payload.
-  - All fields must be populated
+  - Updates a movie with the provided parameters.
+  - Request Arguments: id (The ID of the movie to update)
   - Roles authorized : Casting Director, Executive Producer
+  - Required permission: `patch:movies`
   - Returns a 404 if movie is not in database
-
+  - All fields must be populated
+  - Request Body:
+  ```json
+  {
+    "title": "The Boys in the Band Updated"
+	"release_date": "2018-01-19"
+  }
+  ```
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X PATCH -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band Updated", "release_date": "2018-01-19" }'`
 
 ```json
@@ -209,9 +230,11 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Deletes a movies by id from the URL parameter.
+  - Deletes a specific movie matching the provided movie id.
+  - Request Arguments: id (The ID of the movie to delete)
   - Roles authorized : Executive Producer
-  - Returns a 404 if movie is not found
+  - Required permission: `delete:movie`
+  - Returns a 404 if movie is not in database
 
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X DELETE`
 
@@ -226,8 +249,10 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Returns a list of all the actors.
+  - Returns a list of all the actors in the database
+  - Request arguments: None
   - Roles authorized : Casting Assistant, Casting Director, Executive Producer
+  - Required permission: `get:actors`
 
 - Sample: `curl http://127.0.0.1:5000/actors`
 
@@ -255,9 +280,11 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Route for getting a specific actor.
+  - Returns the specific actor matching the provided id.
+  - Request arguments: id (ID of the actor)
   - Roles authorized : Casting Assistant, Casting Director, Executive Producer
-  - Returns a 404 if actor is not found
+  - Required permission: `get:actors`
+  - Returns a 404 if actor is not found in database
 
 - Sample: `curl http://127.0.0.1:5000/actors/1`
 
@@ -277,8 +304,18 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Creates a new actor based on a posted json payload.
-  - Roles authorized : Casting Director, Executive Producer.
+  - Creates a new actor with the provided parameters.
+  - Request arguments: None
+  - Roles authorized : Casting Director, Executive Producer
+  - Required permission: `add:actors`
+  - Request Body:
+  ```json
+    {
+        "name": "Marion Cotillard",
+        "age": 46,
+        "gender": "female"
+    }
+  ```
 
 - Sample: `curl http://127.0.0.1:5000/actors -X POST -H "Content-Type: application/json" -d '{ "name": "Marion Cotillard", "age": 46, "gender": "female" }'`
 
@@ -298,9 +335,20 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Patches an actor based on a payload.
+  - Updates a specific actor with the provided parameters.
+  - Request arguments: id (The ID of the actor to update)
   - Roles authorized : Casting Director, Executive Producer
+  - Required permission: `patch:actors`
   - Returns a 404 if actor is not in database
+  - All fields must be populated
+  - Request Body:
+  ```json
+    {
+        "name": "Marion Cotillard Updated",
+        "age": 20,
+        "gender": "female"
+    }
+  ```
 
 - Sample: `curl http://127.0.0.1:5000/actors/3 -X PATCH -H "Content-Type: application/json" -d '{ "name": "Marion Cotillard Updated", "age": 20, "gender": "female" }'`
 
@@ -320,8 +368,10 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
 
 - General:
 
-  - Deletes an actor by id form the URL parameter.
-  - Roles authorized : Casting Director, Executive Producer
+  - Deletes a specific actor based on id
+  - Request arguments: id (The ID of the actor to delete)
+  - Roles authorized: Casting Director, Executive Producer
+  - Required permissions: `delete:actors`
   - Returns a 404 if actor is not in database
 
 - Sample: `curl http://127.0.0.1:5000/actors/3 -X DELETE`
