@@ -434,3 +434,6 @@ The error codes currently returned are:
 - 404 – resource not found
 - 422 – unprocessable
 - 500 – internal server error
+
+### Author
+Kep Kaeppeler is the author of this project and all documentation.
