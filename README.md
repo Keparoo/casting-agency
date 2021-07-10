@@ -1,22 +1,29 @@
 # Casting Agency
 
-This is the capstone project for Udacity's Fullstack Nanodegree program. It models a casting agency that is responsible for casting actors in movies and managing these actors. Authorized users can interact with the API to view, add, update, and delete movies and actor details.
+This is the capstone project for Udacity's Fullstack Nanodegree program. It models a casting agency that is responsible for casting actors in movies and managing these actors.  
+Authorized users can interact with the API to view, add, update, and delete movies and actor details.
 
 ---
 ## API URL 
-- **Heroku:** [base URL](https://kep-casting-agency.herokuapp.com/)
-- **Localhost:** base URL is http://127.0.0.1:5000/
+- **Heroku base URL:** https://kep-casting-agency.herokuapp.com/
+- **Localhost base URL:**  is http://127.0.0.1:5000/
 
 
 ## Features
 - Create and manage a database of actors and movies for casting purposes.
 
 ## Authentication and Authorisation
-Authentication is implemented in the form of RBAC (Role Based Access Control) using Auth0
-#### Roles
-- Executive Producer
-- Casting Director
-- Casting Assistance
+Authentication is implemented in the form of RBAC (Role Based Access Control) using `Auth0`
+#### Roles & Permissions
+- Executive Producer  
+    `get:actors`, `get:movies`
+- Casting Director  
+    `get:actors`, `get:movies`
+    `post:actors`, `patch:actors`, `delete:actors`
+- Casting Assistance  
+    `get:actors`, `get:movies`
+    `post:actors`, `patch:actors`, `delete:actors`
+    `post:movies`, `patch:movies`, `delete:movies`
 
 ## Getting Started
 
