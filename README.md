@@ -20,7 +20,7 @@ Authentication is implemented in the form of RBAC (Role Based Access Control) us
 - Casting Director  
     `get:actors`, `get:movies`
     `post:actors`, `patch:actors`, `delete:actors`
-- Casting Assistance  
+- Casting Assistant  
     `get:actors`, `get:movies`
     `post:actors`, `patch:actors`, `delete:actors`
     `post:movies`, `patch:movies`, `delete:movies`
