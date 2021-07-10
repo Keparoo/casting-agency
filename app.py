@@ -10,13 +10,6 @@ from urllib.parse import urlencode
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
 
-# AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
-# AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
-# AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
-# AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
-# AUTH0_AUDIENCE = os.environ['AUTH0_AUDIENCE']
-# AUTH0_BASE_URL='https://' + AUTH0_DOMAIN
-
 load_dotenv()
 
 AUTH0_BASE_URL=os.environ['AUTH0_BASE_URL']
@@ -61,16 +54,10 @@ def create_app(test_config=None):
     def index():
         '''Home page route'''
         return render_template('index.html')
-        # return jsonify({
-        #     'message': 'Welcome to the Casting Agency Home Page'
-        # })
 
     @app.route('/login')
     def login():
         return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL, audience=AUTH0_AUDIENCE)
-        # params = {'audience': API_AUDIENCE, 'response_type': 'token','client_id': AUTH0_CLIENT_ID, 'redirect_uri': url_for('jwtcontrol', _external=True)}
-        # return redirect(AUTH0_BASE_URL + '/authorize?' + urlencode(params))
-        # return render_template('login.html')
 
     @app.route('/callback')
     def callback():

@@ -21,13 +21,6 @@ else:
     if database_path.startswith('postgres://'):
         database_path = database_path.replace('postgres://', 'postgresql://', 1)
 
-# If building URL in pieces use the following code
-# DB_HOST = os.getenv('DB_HOST', '127.0.0.1:5432')
-# DB_USER = os.getenv('DB_USER', 'kep')
-# DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
-# DB_NAME = os.getenv('DB_NAME', 'casting')
-# DB_PATH = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
-
 db = SQLAlchemy()
 
 '''
@@ -39,7 +32,7 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    print(f'Connecting to: {database_path}')
+    # print(f'Connecting to: {database_path}')
     # migrate = Migrate(app, db)
 
 '''
