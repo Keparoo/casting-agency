@@ -18,27 +18,64 @@
         .container {
             margin-top: 25px;
         }
+
+        .permission {
+            background-color: rgb(169, 223, 223);
+            padding: 3px;
+        }
+
+        .sub-head {
+            margin-bottom: 25px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container shadow p-3 mb-5 bg-white rounded">
         <h1 class="text-center">Welcome to the Kep Casting Agency</h1>
-        <h3 class="text-center">An API and database to manage actors and movies</h3>
-        <h2>Login Credentials</h2>
+        <h3 class="text-center sub-head">An API and database to manage actors and movies</h3>
+        <h3>Login Credentials</h3>
+        <hr>
         <div class="row">
             <div class="col-md-4">
                 <p><strong>Casting Assistant</strong></p>
+                <p><span class="permission">get:actors</span>
+                    <span class="permission">get:movies</span>
+                </p>
                 <p>Username: assistant@casting-agency.com</p>
                 <p>Password: Casting4@</p>
             </div>
             <div class="col-md-4">
                 <p><strong>Casting Director</strong></p>
+                <p>
+                    <span class="permission">get:actors</span>
+                    <span class="permission">get:movies</span>
+                </p>
+                <p>
+                    <span class="permission">post:actors</span>
+                    <span class="permission">patch:actors</span>
+                    <span class="permission">delete:actors</span>
+                </p>
                 <p>Username: director@casting-agency.com</p>
                 <p>Password: Casting4@</p>
             </div>
             <div class="col-md-4">
                 <p><strong>Executive Producer</strong></p>
+                <p>
+                    <span class="permission">get:actors</span>
+                    <span class="permission">get:movies</span>
+                </p>
+                <p>
+                    <span class="permission">post:actors</span>
+                    <span class="permission">patch:actors</span>
+                    <span class="permission">delete:actors</span>
+                </p>
+                <span class="permission">post:movies</span>
+                <span class="permission">patch:movies</span>
+                <span class="permission">delete:movies</span>
+                <p>
+
+                </p>
                 <p>Username: producer@casting-agency.com</p>
                 <p>Password: Casting4@</p>
             </div>
