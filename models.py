@@ -3,10 +3,13 @@ from sqlalchemy import Column, String, Integer, DateTime, create_engine
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
+from dotenv import load_dotenv
 
 #----------------------------------------------------------------------------#
 # Connect the database and environment variables
 #----------------------------------------------------------------------------#
+
+load_dotenv()
 
 if os.getenv('ENV') == 'test':
     database_path = os.getenv('TEST_DATABASE_URL')
@@ -14,7 +17,7 @@ else:
     # SQLAlchemy 1.4 removed support for postgres://
     # Heroku sets the DATABASE_URL to this and can't be changed
     # https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
-    database_path = os.getenv('DATABASE_URL')
+    database_path = os.environ['DATABASE_URL']
     if database_path.startswith('postgres://'):
         database_path = database_path.replace('postgres://', 'postgresql://', 1)
 
@@ -24,7 +27,6 @@ else:
 # DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
 # DB_NAME = os.getenv('DB_NAME', 'casting')
 # DB_PATH = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}'
-
 
 db = SQLAlchemy()
 

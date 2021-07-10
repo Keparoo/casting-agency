@@ -8,13 +8,22 @@ from flask_cors import CORS
 from auth import AuthError, requires_auth, requires_signed_in
 from urllib.parse import urlencode
 from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 
-AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
-AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
-AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
-AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
-AUTH0_AUDIENCE = os.environ['AUTH0_AUDIENCE']
-AUTH0_BASE_URL='https://' + AUTH0_DOMAIN
+# AUTH0_CALLBACK_URL = os.environ['AUTH0_CALLBACK_URL']
+# AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+# AUTH0_CLIENT_ID = os.environ['AUTH0_CLIENT_ID']
+# AUTH0_CLIENT_SECRET = os.environ['AUTH0_CLIENT_SECRET']
+# AUTH0_AUDIENCE = os.environ['AUTH0_AUDIENCE']
+# AUTH0_BASE_URL='https://' + AUTH0_DOMAIN
+
+load_dotenv()
+
+AUTH0_BASE_URL=os.environ['AUTH0_BASE_URL']
+AUTH0_AUDIENCE=os.environ['AUTH0_AUDIENCE']
+AUTH0_CLIENT_ID=os.environ['AUTH0_CLIENT_ID']
+AUTH0_CLIENT_SECRET=os.environ['AUTH0_CLIENT_SECRET']
+AUTH0_CALLBACK_URL=os.environ['AUTH0_CALLBACK_URL']
 
 # create and configure the Flask app
 def create_app(test_config=None):

@@ -20,8 +20,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.client = self.app.test_client
 
         # Set up database
-        self.database_name = "test_casting"
-        self.database_path = "postgresql://{}:{}@{}/{}".format('kep','password','localhost:5432', self.database_name)
+        self.database_path=os.environ['TEST_DATABASE_URL']
+        # self.database_name = "test_casting"
+        # self.database_path = "postgresql://{}:{}@{}/{}".format('kep','password','localhost:5432', self.database_name)
         setup_db(self.app, self.database_path)
 
         # Create test variable data
