@@ -133,7 +133,7 @@ To use them install [Postman](https://www.postman.com/downloads/) locally and im
 ---
 ## Deployment
 
-This project is deployed to Heroku. To Deploy your own version:
+This project is deployed to [Heroku](https://heroku.com). To Deploy your own version:
 - You must have Git installed and your project must be tracked in a repository
 - Install Heroku locally: https://devcenter.heroku.com/articles/heroku-cli
 - Create your heroku app:
