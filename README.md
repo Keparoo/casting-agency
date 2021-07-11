@@ -88,7 +88,7 @@ createdb <database_name>
 - Add starter data by executing:
   `python manage.py seed`
 
-- Change the `database_url` in `setup.sh` and `setup_testing.sh` to match the names of your development and testing databases
+- Set the `DATABASE_URL` and `TEST_DATABASE_URL` in `.env` file to match the names of your development and testing databases.
 
 ## Running the Server
 Switch to the project directory and ensure that the virtual environment is running.
@@ -115,7 +115,10 @@ To create an authorization system matching the API see the docs at [Auth0](https
 - Create and assign permissions to the roles
 - Update the `AUTH0_DOMAIN`, `API_AUDIENCE`, `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET`, and `AUTH0_CALLBACK_URL` constants in the `.env` file
 ---
+## Environment Variables  
+Create a `.env` file matching the template provided in the `.env.example` file. All environmental variables must be populated with the appropriate `auth0` constants and `PostgreSQL` database URLs in order for the application to function.  
 
+---
 ## Testing
 
 Replace the JWT tokens in `test_app.py` with ones generated on the website. JWT tokens expire 24 hours from generation.
