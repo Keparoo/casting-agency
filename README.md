@@ -1,16 +1,16 @@
 # Casting Agency
 
-This is the capstone project for Udacity's Fullstack Nanodegree program. It models a casting agency that is responsible for casting actors in movies and managing these actors.  
-Authorized users can interact with the API to view, add, update, and delete movies and actor details.
+This is the capstone project for Udacity's Fullstack Nanodegree program. It models a casting agency database to facilitate casting and managing actors for the movie industry.   
+Authorized users (Executive Producers, Casting Directors, and Casting Assistants) can interact with the API to view, add, update, and delete movies and actor details contingent on the permissions allowed to each role.
 
 ---
 
 ## Features
-- Database of actors and movies to support a casting agency
+- Database of actor and movie info to support a casting agency
 - RESTful API to interact with the database
 - Implements an RBAC authorization system
-- Test suite
-- Postman Collections for both local and deployed additional testing
+- Unit testing test suite
+- Postman Collections for additional testing of both local and deployed versions of  app
 - Deployed to Heroku
 
 ## API URL 
@@ -18,7 +18,7 @@ Authorized users can interact with the API to view, add, update, and delete movi
 - **Localhost base URL:**  is http://127.0.0.1:5000/
 
 ## Authentication and Authorisation
-Authentication is implemented in the form of RBAC (Role Based Access Control) using `Auth0`
+Authentication is implemented in the form of RBAC (Role Based Access Control) using [Auth0](https://auth0.com/)
 #### Roles & Permissions
 - Executive Producer  
     `get:actors`, `get:movies`
@@ -41,14 +41,14 @@ git clone https://github.com/Keparoo/casting-agency.git
 ```
 #### Key Dependencies
 
-- [Python 3.8.5](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python) Follow the instructions to install the latest version of python for your platform. This project was developed using Python 3.8.5 and the project will not run with versions of Python below 3.6.
-- [Flask](http://flask.pocoo.org/) is a lightweight backend microservices framework. Flask is required to handle requests and responses.
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server.
-- [Flask-Migrate](https://flask-cors.readthedocs.io/en/latest/) is an extension that handles SQLAlchemy database migrations for Flask applications using Alembic. The database operations are made available through the Flask command-line interface.
-- [PostgreSQL](https://www.postgresql.org/docs/) is a powerful, open source object-relational database system
-- [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we'll use handle the lightweight sqlite database. You'll primarily work in app.py and can reference models.py.
-- [Unittest](https://docs.python.org/3/library/unittest.html) is a Python testing framework.
-- [Auth0](https://auth0.com/docs/api/management/v2) is an adaptable authentication and authorization platform.
+- [Python 3.8.5](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python) This project was developed using Python 3.8.5 and the project will not run with versions of Python below 3.6.
+- [Flask](http://flask.pocoo.org/) handles requests and responses.
+- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) handles cross origin requests from the frontend server.
+- [Flask-Migrate](https://flask-cors.readthedocs.io/en/latest/) is used to handle SQLAlchemy database migrations for Flask applications using Alembic. The database operations are made available through the Flask command-line interface.
+- [PostgreSQL](https://www.postgresql.org/docs/) is the object-relational SQL database system used.
+- [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM used to handle PostgreSQL database.
+- [Unittest](https://docs.python.org/3/library/unittest.html) is the Python testing framework used for unit testing.
+- [Auth0](https://auth0.com/docs/api/management/v2) is an adaptable authentication and authorization platform used to implement RBAC.
 
 #### Virtual Enviornment
 
@@ -100,17 +100,20 @@ source setup.sh
 flask run
 ```
 ---  
-### Authorization
-The following URL will allow **auth0** login and generate a jwt for the currently setup **auth0** account:
-- [Generate JWT](https://websecure.us.auth0.com/authorize?audience=casting-agency&response_type=token&client_id=1KYiQV065tmQi7513VmD3Ka6TxvNpyRl&redirect_uri=http://127.0.0.1:5000)  
+## Authorization
+The following is the formula for the URL that will open the **auth0** login page and after login return a JWT for the **auth0** account:  
+  AUTH0_BASE_URL + 'authorize?audience=' + AUTH0_AUDIENCE + '&response_type=token&client_id=' + AUTH0_CLIENT_ID + '&redirect_uri=' + AUTH0_CALLBACK_URL
 
 To create an authorization system matching the API see the docs at [Auth0](https://auth0.com/docs/api/management/v2)  
 - Create an auth0 account
-- In the auth0 dashboard create an application and API
+- In the auth0 dashboard create a single page application
+    - Populate the allowed callback and logout URLs
+- Create an API
+    - Turn on `Enable RBAC` and `Add Permissions in the Access Token`
 - Add authorized users
 - Create roles for the users
 - Create and assign permissions to the roles
-- Update the `AUTH0_DOMAIN` and `API_AUDIENCE` constants in the `auth.py` file
+- Update the `AUTH0_DOMAIN`, `API_AUDIENCE`, `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET`, and `AUTH0_CALLBACK_URL` constants in the `.env` file
 ---
 
 ## Testing
