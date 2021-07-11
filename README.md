@@ -87,7 +87,12 @@ source setup.sh
 flask run
 ```
 --- 
-## Authentication and Authorisation
+
+## Environment Variables  
+Create a `.env` file matching the template provided in the `.env.example` file. All environmental variables must be populated with the appropriate `auth0` constants and `PostgreSQL` database URLs in order for the application to function.  
+
+---
+## Authentication and Authorization
 Authentication is implemented in the form of RBAC (Role Based Access Control) using [Auth0](https://auth0.com/)
 #### Roles & Permissions
 - Executive Producer  
@@ -113,10 +118,6 @@ To create an authorization system matching the API see the docs at [Auth0](https
 - Create roles for the users
 - Create and assign permissions to the roles
 - Update the `AUTH0_DOMAIN`, `API_AUDIENCE`, `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET`, and `AUTH0_CALLBACK_URL` constants in the `.env` file
----
-## Environment Variables  
-Create a `.env` file matching the template provided in the `.env.example` file. All environmental variables must be populated with the appropriate `auth0` constants and `PostgreSQL` database URLs in order for the application to function.  
-
 ---
 ## Testing
 
