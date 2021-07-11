@@ -4,7 +4,7 @@ echo 'Drop tables'
 python manage.py db downgrade
 echo 'Create tables'
 python manage.py db upgrade
-echo 'Seed data'
+echo 'Seed database'
 python manage.py seed
-echo 'Data seeded. Test starting'
+echo 'Data seeded. Begin testing...'
 python test_app.py

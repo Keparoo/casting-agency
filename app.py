@@ -12,8 +12,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-AUTH0_BASE_URL=os.environ['AUTH0_BASE_URL']
-AUTH0_AUDIENCE=os.environ['AUTH0_AUDIENCE']
+AUTH0_DOMAIN=os.environ['AUTH0_DOMAIN']
+AUTH0_BASE_URL='https://' + AUTH0_DOMAIN
+API_AUDIENCE=os.environ['API_AUDIENCE']
 AUTH0_CLIENT_ID=os.environ['AUTH0_CLIENT_ID']
 AUTH0_CLIENT_SECRET=os.environ['AUTH0_CLIENT_SECRET']
 AUTH0_CALLBACK_URL=os.environ['AUTH0_CALLBACK_URL']
@@ -57,7 +58,9 @@ def create_app(test_config=None):
 
     @app.route('/login')
     def login():
-        return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL, audience=AUTH0_AUDIENCE)
+        # Login URL Format:
+        # AUTH0_BASE_URL + 'authorize?audience=' + API_AUDIENCE + '&response_type=token&client_id=' + AUTH0_CLIENT_ID + '&redirect_uri=' + AUTH0_CALLBACK_URL
+        return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL, audience=API_AUDIENCE)
 
     @app.route('/callback')
     def callback():
