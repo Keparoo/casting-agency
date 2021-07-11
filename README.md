@@ -168,6 +168,10 @@ heroku addons:create heroku-postgresql:hobby-dev --app <name_of_your_application
 ```bash
 heroku run python manage.py db upgrade --app name_of_your_application
 ```
+- To see the Heroku logs for debugging:
+```bash
+heroku logs --tail
+```
 ---
 
 ## API
