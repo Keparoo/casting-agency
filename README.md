@@ -16,20 +16,7 @@ Authorized users (Executive Producers, Casting Directors, and Casting Assistants
 ## API URL 
 - **Heroku base URL:** https://kep-casting-agency.herokuapp.com/
 - **Localhost base URL:**  is http://127.0.0.1:5000/
-
-## Authentication and Authorisation
-Authentication is implemented in the form of RBAC (Role Based Access Control) using [Auth0](https://auth0.com/)
-#### Roles & Permissions
-- Executive Producer  
-    `get:actors`, `get:movies`
-- Casting Director  
-    `get:actors`, `get:movies`
-    `post:actors`, `patch:actors`, `delete:actors`
-- Casting Assistant  
-    `get:actors`, `get:movies`
-    `post:actors`, `patch:actors`, `delete:actors`
-    `post:movies`, `patch:movies`, `delete:movies`
-
+---  
 ## Getting Started
 
 ### Installation and Database Setup
@@ -99,14 +86,26 @@ Switch to the project directory and ensure that the virtual environment is runni
 source setup.sh
 flask run
 ```
----  
-## Authorization
+--- 
+## Authentication and Authorisation
+Authentication is implemented in the form of RBAC (Role Based Access Control) using [Auth0](https://auth0.com/)
+#### Roles & Permissions
+- Executive Producer  
+    `get:actors`, `get:movies`
+- Casting Director  
+    `get:actors`, `get:movies`
+    `post:actors`, `patch:actors`, `delete:actors`
+- Casting Assistant  
+    `get:actors`, `get:movies`
+    `post:actors`, `patch:actors`, `delete:actors`
+    `post:movies`, `patch:movies`, `delete:movies` 
+
 The following is the formula for the URL that will open the **auth0** login page and after login return a JWT for the **auth0** account:  
-  AUTH0_BASE_URL + 'authorize?audience=' + AUTH0_AUDIENCE + '&response_type=token&client_id=' + AUTH0_CLIENT_ID + '&redirect_uri=' + AUTH0_CALLBACK_URL
+  `AUTH0_BASE_URL + 'authorize?audience=' + AUTH0_AUDIENCE + '&response_type=token&client_id=' + AUTH0_CLIENT_ID + '&redirect_uri=' + AUTH0_CALLBACK_URL`
 
 To create an authorization system matching the API see the docs at [Auth0](https://auth0.com/docs/api/management/v2)  
-- Create an auth0 account
-- In the auth0 dashboard create a single page application
+- Create an **auth0** account
+- In the **auth0 dashboard** create a single page application
     - Populate the allowed callback and logout URLs
 - Create an API
     - Turn on `Enable RBAC` and `Add Permissions in the Access Token`
