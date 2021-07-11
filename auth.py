@@ -1,16 +1,20 @@
+import os
 import json
 from flask import request, _request_ctx_stack, abort, redirect, session
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+from dotenv import load_dotenv
 
 #----------------------------------------------------------------------------#
 # Configure Auth0 constants
 #----------------------------------------------------------------------------#
 
-AUTH0_DOMAIN = 'websecure.us.auth0.com'
+load_dotenv()
+
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'casting-agency'
+API_AUDIENCE=os.environ['API_AUDIENCE']
 
 #----------------------------------------------------------------------------#
 # Implement JWT authorization
