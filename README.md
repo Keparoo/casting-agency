@@ -164,6 +164,10 @@ heroku addons:create heroku-postgresql:hobby-dev --app <name_of_your_application
 ```
 - go to settings on the [Heroku dashboard](https://dashboard.heroku.com/) for the app you've built and click on `Show Environment Variables`. You will need to set environmental variables for each variable found in the `.env.example` file.
 
+- Once your app is deployed, run migrations by running:
+```bash
+heroku run python manage.py db upgrade --app name_of_your_application
+```
 ---
 
 ## API
