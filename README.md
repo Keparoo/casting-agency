@@ -111,7 +111,14 @@ The following is the formula for the URL that will open the **auth0** login page
 To create an authorization system matching the API see the docs at [Auth0](https://auth0.com/docs/api/management/v2)  
 - Create an **auth0** account
 - In the **auth0 dashboard** create a single page application
-    - Populate the allowed callback and logout URLs
+    - Add the following URLs to the Allowed Callback URLs:  
+        1. http://127.0.0.1:5000/callback  
+        2. https://kep-casting-agency.herokuapp.com/callback
+    - Add the following URLs to the Allowed Logout URLs:  
+        1. http://127.0.0.1:5000/ 
+        2. https://kep-casting-agency.herokuapp.com/
+        3. http://127.0.0.1:5000/login
+        4. https://kep-casting-agency.herokuapp.com/login
 - Create an API
     - Turn on `Enable RBAC` and `Add Permissions in the Access Token`
 - Add authorized users
