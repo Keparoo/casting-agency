@@ -151,7 +151,7 @@ This project is deployed to [Heroku](https://heroku.com). To Deploy your own ver
 - Install Heroku locally: https://devcenter.heroku.com/articles/heroku-cli
 - Create your heroku app:
 ```bash
-heroku create <name_of_your_app>
+heroku create <name_of_app>
 ```
 - Add `heroku` as a Git remote and push your project to `Heroku` (Change `main` to the name of the appropriate git brach if it differs, i.e. `master`)
 ```bash
@@ -160,17 +160,23 @@ git push heroku main
 ```
 - Create a postgres database in Heroku:
 ```bash
-heroku addons:create heroku-postgresql:hobby-dev --app <name_of_your_application>
+heroku addons:create heroku-postgresql:hobby-dev --app <name_of_app>
 ```
 - go to settings on the [Heroku dashboard](https://dashboard.heroku.com/) for the app you've built and click on `Show Environment Variables`. You will need to set environmental variables for each variable found in the `.env.example` file.
 
 - Once your app is deployed, run migrations by running:
 ```bash
-heroku run python manage.py db upgrade --app name_of_your_application
+heroku run python manage.py db upgrade --app <name_of_app>
 ```
 - To see the Heroku logs for debugging:
 ```bash
 heroku logs --tail
+```
+- To reset the Heroku database:
+```bash
+heroku run python manage.py db downgrade --app <name_of_app>
+heroku run python manage.py db upgrade --app <name_of_app>
+heroku run python manage.py seed --app <name_of_app>
 ```
 ---
 
