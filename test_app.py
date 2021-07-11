@@ -110,7 +110,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_update_movie(self):
-        '''Tests succuss of update_movie'''
+        '''Tests success of update_movie'''
 
         res = self.client().patch('/movies/1', json=self.test_movie, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
@@ -257,7 +257,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'resource not found')
 
     def test_update_actor(self):
-        '''Tests succuss of update_actor'''
+        '''Tests success of update_actor'''
 
         res = self.client().patch('/actors/1', json=self.test_actor, headers={"Authorization": "Bearer " + EXECUTIVE_PRODUCER})
         data = json.loads(res.data)
@@ -330,6 +330,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 # Authorization Tests
 #----------------------------------------------------------------------------#
     def test_unauthorised_add_movies(self):
+        '''Test auth failure: no post:movies'''
         response= self.client().post(
             '/movies',
             json=self.test_movie,
@@ -342,6 +343,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertTrue(data['message'], 'Permission not found')
 
     def test_unauthorised_add_actors(self):
+        '''test auth failure: no post:actors'''
         response= self.client().post(
             '/actors',
             json=self.test_actor,
@@ -354,6 +356,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertTrue(data['message'], 'Permission not found')
 
     def test_unauthorised_in_edit_actor(self):
+        '''Test auth failure: no patch:actors'''
         response= self.client().patch(
             '/actors/1',
             json=self.test_actor,
@@ -366,6 +369,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertTrue(data['message'], 'Permission not found')
 
     def test_unauthorised_delete_movie(self):
+        '''Test auth error: no delete:movies'''
         response = self.client().delete(
             '/movies/1',
             headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
