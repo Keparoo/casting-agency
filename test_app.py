@@ -329,21 +329,8 @@ class CastingAgencyTestCase(unittest.TestCase):
 #----------------------------------------------------------------------------#
 # Authorization Tests
 #----------------------------------------------------------------------------#
-    def test_unauthorised_add_movies(self):
-        '''Test auth failure: no post:movies'''
-        response= self.client().post(
-            '/movies',
-            json=self.test_movie,
-            headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
-        )
-        data = json.loads(response.data)
-
-        self.assertEqual(response.status_code, 401)
-        self.assertEqual(data['success'], False)
-        self.assertTrue(data['message'], 'Permission not found')
-
-    def test_unauthorised_add_actors(self):
-        '''test auth failure: no post:actors'''
+    def test_unauthorised_add_actors_assistant(self):
+        '''test auth failure: assistant - no post:actors'''
         response= self.client().post(
             '/actors',
             json=self.test_actor,
@@ -355,8 +342,21 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'], 'Permission not found')
 
-    def test_unauthorised_in_edit_actor(self):
-        '''Test auth failure: no patch:actors'''
+    def test_unauthorised_add_movies_assistant(self):
+        '''test auth failure: assistant - no post:movies'''
+        response= self.client().post(
+            '/movies',
+            json=self.test_movie,
+            headers={"Authorization": "Bearer " + CASTING_ASSISTANT}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
+
+    def test_unauthorised_in_edit_actor_assistant(self):
+        '''Test auth failure: assistant - no patch:actors'''
         response= self.client().patch(
             '/actors/1',
             json=self.test_actor,
@@ -368,8 +368,71 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'], 'Permission not found')
 
+    def test_unauthorised_in_edit_movie_assistant(self):
+        '''Test auth failure: assistant - no patch:movies'''
+        response= self.client().patch(
+            '/movies/1',
+            json=self.test_movie,
+            headers={"Authorization": "Bearer " + CASTING_ASSISTANT}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
+
+    def test_unauthorised_delete_movie_assistant(self):
+        '''Test auth error: assistant - no delete:movies'''
+        response = self.client().delete(
+            '/movies/1',
+            headers={"Authorization": "Bearer " + CASTING_ASSISTANT}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
+
+    def test_unauthorised_delete_actor_assistant(self):
+        '''Test auth error: assistant - no delete:actors'''
+        response = self.client().delete(
+            '/actors/1',
+            headers={"Authorization": "Bearer " + CASTING_ASSISTANT}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
+
+    def test_unauthorised_add_movies(self):
+        '''Test auth failure: director - no post:movies'''
+        response= self.client().post(
+            '/movies',
+            json=self.test_movie,
+            headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
+
+    def test_unauthorised_in_edit_movie(self):
+        '''Test auth failure: director - no patch:movies'''
+        response= self.client().patch(
+            '/movies/1',
+            json=self.test_movie,
+            headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
+        )
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 401)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'], 'Permission not found')
+
     def test_unauthorised_delete_movie(self):
-        '''Test auth error: no delete:movies'''
+        '''Test auth error: director - no delete:movies'''
         response = self.client().delete(
             '/movies/1',
             headers={"Authorization": "Bearer " + CASTING_DIRECTOR}
