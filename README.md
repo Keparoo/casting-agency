@@ -1,11 +1,13 @@
 # Casting Agency
 
-This is the capstone project for Udacity's Fullstack Nanodegree program. It models a casting agency database to facilitate casting and managing actors for the movie industry.   
+This is the capstone project for Udacity's Fullstack Nanodegree program. It models a casting agency database to facilitate casting and managing actors for the movie industry.
+
 Authorized users (Executive Producers, Casting Directors, and Casting Assistants) can interact with the API to view, add, update, and delete movies and actor details contingent on the permissions allowed to each role.
 
 ---
 
 ## Features
+
 - Database of actor and movie info to support a casting agency
 - RESTful API to interact with the database
 - Implements an RBAC authorization system
@@ -13,10 +15,13 @@ Authorized users (Executive Producers, Casting Directors, and Casting Assistants
 - Postman Collections for additional testing of both local and deployed versions of  app
 - Deployed to Heroku
 
-## API URL 
+## API URL
+
 - **Heroku base URL:** https://kep-casting-agency.herokuapp.com/
 - **Localhost base URL:**  is http://127.0.0.1:5000/
----  
+
+---
+
 ## Getting Started
 
 ### Installation and Database Setup
@@ -26,6 +31,7 @@ Clone the repo by running
 ```bash
 git clone https://github.com/Keparoo/casting-agency.git
 ```
+
 #### Key Dependencies
 
 - [Python 3.8.5](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python) This project was developed using Python 3.8.5 and the project will not run with versions of Python below 3.6.
@@ -66,10 +72,13 @@ This will install all of the required packages in the `requirements.txt` file.
 ## Database Setup
 
 The project uses **PostgreSQL** databases.
+
 - Create two databases: One for **testing** and one for **development**
+
 ```bash
 createdb <database_name>
 ```
+
 - Generate database tables from the migration files included by executing: 
   `python manage.py db upgrade`
 - Add starter data by executing:
@@ -78,23 +87,30 @@ createdb <database_name>
 - Set the `DATABASE_URL` and `TEST_DATABASE_URL` in `.env` file to match the names of your development and testing databases.
 
 ## Running the Server
+
 Switch to the project directory and ensure that the virtual environment is running.
 
-#### To run the **development** server, execute:  
+### To run the **development** server, execute
 
 ```bash
 source setup.sh
 flask run
 ```
---- 
 
-## Environment Variables  
+---
+
+## Environment Variables
+
 Create a `.env` file matching the template provided in the `.env.example` file. All environmental variables must be populated with the appropriate `auth0` constants and `PostgreSQL` database URLs in order for the application to function.  
 
 ---
+
 ## Authentication and Authorization
+
 Authentication is implemented in the form of RBAC (Role Based Access Control) using [Auth0](https://auth0.com/)
-#### Roles & Permissions
+
+### Roles & Permissions
+
 - Executive Producer  
     `get:actors`, `get:movies`
 - Casting Director  
@@ -108,24 +124,27 @@ Authentication is implemented in the form of RBAC (Role Based Access Control) us
 The following is the formula for the URL that will open the **auth0** login page and after login return a JWT for the **auth0** account:  
   `AUTH0_BASE_URL + 'authorize?audience=' + AUTH0_AUDIENCE + '&response_type=token&client_id=' + AUTH0_CLIENT_ID + '&redirect_uri=' + AUTH0_CALLBACK_URL`
 
-To create an authorization system matching the API see the docs at [Auth0](https://auth0.com/docs/api/management/v2)  
+To create an authorization system matching the API see the docs at [Auth0](https://auth0.com/docs/api/management/v2)
+
 - Create an **auth0** account
 - In the **auth0 dashboard** create a single page application
-    - Add the following URLs to the Allowed Callback URLs:  
-        1. http://127.0.0.1:5000/callback  
-        2. https://kep-casting-agency.herokuapp.com/callback
-    - Add the following URLs to the Allowed Logout URLs:  
-        1. http://127.0.0.1:5000/ 
-        2. https://kep-casting-agency.herokuapp.com/
-        3. http://127.0.0.1:5000/login
-        4. https://kep-casting-agency.herokuapp.com/login
+  - Add the following URLs to the Allowed Callback URLs:  
+      1. <http://127.0.0.1:5000/callback>
+      2. <https://kep-casting-agency.herokuapp.com/callback>
+  - Add the following URLs to the Allowed Logout URLs:  
+      1. <http://127.0.0.1:5000/>
+      2. <https://kep-casting-agency.herokuapp.com/>
+      3. <http://127.0.0.1:5000/login>
+      4. <https://kep-casting-agency.herokuapp.com/login>
 - Create an API
-    - Turn on `Enable RBAC` and `Add Permissions in the Access Token`
+  - Turn on `Enable RBAC` and `Add Permissions in the Access Token`
 - Add authorized users
 - Create roles for the users
 - Create and assign permissions to the roles
 - Update the `AUTH0_DOMAIN`, `API_AUDIENCE`, `AUTH0_CLIENT_ID`, `AUTH0_CLIENT_SECRET`, and `AUTH0_CALLBACK_URL` constants in the `.env` file
+
 ---
+
 ## Testing
 
 Replace the JWT tokens in `test_app.py` with ones generated on the website. JWT tokens expire 24 hours from generation.
@@ -138,46 +157,61 @@ source setup_test.sh
 ```
 
 Two Postman collections are also included for further testing.
+
 - `casting-agency-local.postman_collection.json`
 - `casting-agency-heroku.postman_collection.json`
 
 To use them install [Postman](https://www.postman.com/downloads/) locally and import the 2 collections. In order for them to work properly, update the Bearer Tokens in each collection with tokens generated from the website. See the Authorization section.
 
 ---
+
 ## Deployment
 
 This project is deployed to [Heroku](https://heroku.com). To Deploy your own version:
+
 - You must have Git installed and your project must be tracked in a repository
-- Install Heroku locally: https://devcenter.heroku.com/articles/heroku-cli
+- Install Heroku locally: <https://devcenter.heroku.com/articles/heroku-cli>
 - Create your heroku app:
+
 ```bash
 heroku create <name_of_app>
 ```
+
 - Add `heroku` as a Git remote and push your project to `Heroku` (Change `main` to the name of the appropriate git brach if it differs, i.e. `master`)
+
 ```bash
 git remote add heroku <heroku_git_url>
 git push heroku main
 ```
+
 - Create a postgres database in Heroku:
+
 ```bash
 heroku addons:create heroku-postgresql:hobby-dev --app <name_of_app>
 ```
+
 - go to settings on the [Heroku dashboard](https://dashboard.heroku.com/) for the app you've built and click on `Show Environment Variables`. You will need to set environmental variables for each variable found in the `.env.example` file.
 
 - Once your app is deployed, run migrations by running:
+
 ```bash
 heroku run python manage.py db upgrade --app <name_of_app>
 ```
+
 - To see the Heroku logs for debugging:
+
 ```bash
 heroku logs --tail
 ```
+
 - To reset the Heroku database:
+
 ```bash
 heroku run python manage.py db downgrade --app <name_of_app>
 heroku run python manage.py db upgrade --app <name_of_app>
 heroku run python manage.py seed --app <name_of_app>
 ```
+
 ---
 
 ## API
@@ -250,7 +284,8 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
   - Roles authorized : Executive Producer
   - Required permission: `post:movies`
   - All fields must be populated:
-  - Request Body: 
+  - Request Body:
+
   ```json
     {
         "title": "The Boys in the Band",
@@ -282,12 +317,14 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
   - Returns a 404 if movie is not in database
   - All fields must be populated
   - Request Body:
+
   ```json
     {
       "title": "The Boys in the Band Updated",
       "release_date": "2018-01-19"
     }
   ```
+
 - Sample: `curl http://127.0.0.1:5000/movies/3 -X PATCH -H "Content-Type: application/json" -d '{ "title": "The Boys in the Band Updated", "release_date": "2018-01-19" }'`
 
 ```json
@@ -384,6 +421,7 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
   - Roles authorized : Casting Director, Executive Producer
   - Required permission: `add:actors`
   - Request Body:
+
   ```json
     {
         "name": "Marion Cotillard",
@@ -417,6 +455,7 @@ In order to use the API, users need to be authenticated. JWT tokens can be gener
   - Returns a 404 if actor is not in database
   - All fields must be populated
   - Request Body:
+
   ```json
     {
         "name": "Marion Cotillard Updated",
@@ -491,4 +530,5 @@ The error codes currently returned are:
 - 500 – internal server error
 
 ### Author
+
 Kep Kaeppeler is the author of this project and all documentation.
